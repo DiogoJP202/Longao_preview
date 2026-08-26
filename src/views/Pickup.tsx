@@ -27,7 +27,7 @@ export default function Pickup() {
   return (
     <div
       className="h-full flex flex-col overflow-hidden relative"
-      style={{ background: '#080807', aspectRatio: 'auto' }}
+      style={{ background: '#E5E2DB', aspectRatio: 'auto' }}
     >
       {/* Flash animation overlay */}
       {flashOrder && (
@@ -59,17 +59,17 @@ export default function Pickup() {
       )}
 
       {/* Header */}
-      <div className="flex items-end justify-between gap-4 px-6 md:px-16 pt-8 md:pt-14 pb-6 md:pb-8 border-b" style={{ borderColor: '#1A1816' }}>
+      <div className="flex items-end justify-between gap-4 px-6 md:px-16 pt-8 md:pt-14 pb-6 md:pb-8 border-b" style={{ borderColor: '#CEC8BC' }}>
         <div>
-          <div className="font-display font-black tracking-tight text-[2.6rem] sm:text-[3.5rem] md:text-[5rem]" style={{ lineHeight: 1, color: '#EDEAE2' }}>
+          <div className="font-display font-black tracking-tight text-[2.6rem] sm:text-[3.5rem] md:text-[5rem]" style={{ lineHeight: 1, color: '#1A1714' }}>
             LONGÃO
           </div>
-          <div className="font-mono text-[12px] tracking-widest mt-2" style={{ color: '#35322C' }}>
+          <div className="font-mono text-[12px] tracking-widest mt-2" style={{ color: '#736B5E' }}>
             CAFÉ / CORRIDA / VILA BUARQUE
           </div>
         </div>
         <div className="text-right">
-          <div className="font-mono text-[11px] tracking-widest mb-1" style={{ color: '#35322C' }}>
+          <div className="font-mono text-[11px] tracking-widest mb-1" style={{ color: '#736B5E' }}>
             RETIRADA
           </div>
           <LiveClock />
@@ -77,24 +77,24 @@ export default function Pickup() {
       </div>
 
       {/* Content */}
-      <div className="flex-1 flex flex-col md:flex-row divide-y md:divide-y-0 md:divide-x min-h-0 overflow-y-auto md:overflow-visible" style={{ borderColor: '#1A1816' }}>
+      <div className="flex-1 flex flex-col md:flex-row divide-y md:divide-y-0 md:divide-x min-h-0 overflow-y-auto md:overflow-visible" style={{ borderColor: '#CEC8BC' }}>
         {/* Preparing */}
         <div className="flex-1 px-6 md:px-16 py-6 md:py-10 md:overflow-y-auto">
-          <div className="font-mono text-[11px] tracking-widest mb-8" style={{ color: '#35322C' }}>
+          <div className="font-mono text-[11px] tracking-widest mb-8" style={{ color: '#736B5E' }}>
             EM PREPARO
           </div>
           <div className="space-y-4 md:space-y-5">
             {preparingOrders.length === 0 && (
-              <div className="font-mono text-[12px] tracking-widest" style={{ color: '#1A1816' }}>
+              <div className="font-mono text-[12px] tracking-widest" style={{ color: '#7D7568' }}>
                 —
               </div>
             )}
             {preparingOrders.map(order => (
               <div key={order.id} className="flex items-baseline gap-4 md:gap-6">
-                <span className="font-display font-black text-[2.2rem] md:text-[3.5rem]" style={{ lineHeight: 1, color: '#2E2B27' }}>
+                <span className="font-display font-black text-[2.2rem] md:text-[3.5rem]" style={{ lineHeight: 1, color: '#7D7568' }}>
                   {String(order.id).padStart(3, '0')}
                 </span>
-                <span className="font-display font-bold text-lg md:text-2xl tracking-widest truncate" style={{ color: '#3A3835' }}>
+                <span className="font-display font-bold text-lg md:text-2xl tracking-widest truncate" style={{ color: '#6E665A' }}>
                   {order.customer}
                 </span>
               </div>
@@ -103,13 +103,13 @@ export default function Pickup() {
         </div>
 
         {/* Ready */}
-        <div className="flex-1 px-6 md:px-16 py-6 md:py-10 md:overflow-y-auto" style={{ background: '#0A0A09' }}>
-          <div className="font-mono text-[11px] tracking-widest mb-8" style={{ color: '#4A9B6F' }}>
+        <div className="flex-1 px-6 md:px-16 py-6 md:py-10 md:overflow-y-auto" style={{ background: '#DCD7CC' }}>
+          <div className="font-mono text-[11px] tracking-widest mb-8" style={{ color: '#26663F' }}>
             PRONTO
           </div>
           <div className="space-y-4 md:space-y-5">
             {readyOrders.length === 0 && (
-              <div className="font-mono text-[12px] tracking-widest" style={{ color: '#1A1816' }}>
+              <div className="font-mono text-[12px] tracking-widest" style={{ color: '#7D7568' }}>
                 —
               </div>
             )}
@@ -121,15 +121,15 @@ export default function Pickup() {
               >
                 <span
                   className="font-display font-black text-[3rem] md:text-[5rem]"
-                  style={{ lineHeight: 1, color: '#EDEAE2' }}
+                  style={{ lineHeight: 1, color: '#1A1714' }}
                 >
                   {String(order.id).padStart(3, '0')}
                 </span>
                 <div>
-                  <div className="font-display font-black text-2xl md:text-4xl tracking-widest" style={{ color: '#EDEAE2' }}>
+                  <div className="font-display font-black text-2xl md:text-4xl tracking-widest" style={{ color: '#1A1714' }}>
                     {order.customer}
                   </div>
-                  <div className="font-mono text-[10px] tracking-widest mt-1" style={{ color: '#4A9B6F' }}>
+                  <div className="font-mono text-[10px] tracking-widest mt-1" style={{ color: '#26663F' }}>
                     RETIRAR NO BALCÃO
                   </div>
                 </div>
@@ -142,14 +142,14 @@ export default function Pickup() {
       {/* Footer */}
       <div
         className="px-6 md:px-16 py-4 md:py-5 border-t flex items-center justify-between gap-3 shrink-0"
-        style={{ borderColor: '#1A1816' }}
+        style={{ borderColor: '#CEC8BC' }}
       >
-        <div className="font-mono text-[10px] tracking-widest" style={{ color: '#1A1816' }}>
+        <div className="font-mono text-[10px] tracking-widest" style={{ color: '#7D7568' }}>
           SEU PEDIDO ESTÁ QUASE LÁ.
         </div>
         <div className="flex items-center gap-2">
-          <div className="w-1.5 h-1.5 rounded-full" style={{ background: '#4A9B6F' }} />
-          <span className="font-mono text-[10px] tracking-widest" style={{ color: '#1A1816' }}>
+          <div className="w-1.5 h-1.5 rounded-full" style={{ background: '#26663F' }} />
+          <span className="font-mono text-[10px] tracking-widest" style={{ color: '#7D7568' }}>
             AO VIVO
           </span>
         </div>
@@ -168,9 +168,9 @@ function LiveClock() {
   const m = String(time.getMinutes()).padStart(2, '0');
   const s = String(time.getSeconds()).padStart(2, '0');
   return (
-    <div className="font-display font-black text-[1.6rem] md:text-[2.5rem]" style={{ lineHeight: 1, color: '#EDEAE2' }}>
+    <div className="font-display font-black text-[1.6rem] md:text-[2.5rem]" style={{ lineHeight: 1, color: '#1A1714' }}>
       {h}:{m}
-      <span className="text-base md:text-2xl" style={{ color: '#35322C' }}>:{s}</span>
+      <span className="text-base md:text-2xl" style={{ color: '#736B5E' }}>:{s}</span>
     </div>
   );
 }

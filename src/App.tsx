@@ -247,24 +247,24 @@ function Shell() {
   };
 
   if (view === 'pickup') {
-    // A Retirada é a única tela que segue escura: é uma TV vista de longe no
-    // salão, onde fundo escuro com números claros lê melhor à distância.
+    // A Retirada roda sem menu lateral: é um painel de salão, não uma tela de
+    // trabalho.
     return (
-      <div className={`h-full ${demoMode ? 'pb-16 md:pb-14' : ''}`} style={{ background: '#080807' }}>
+      <div className={`h-full ${demoMode ? 'pb-16 md:pb-14' : ''}`} style={{ background: '#E5E2DB' }}>
         <Pickup />
-        {/* A Retirada não tem menu — é um painel de salão. Sem esta saída
-            discreta ela vira um beco sem saída durante a apresentação. */}
+        {/* Sem esta saída discreta o painel vira um beco sem saída durante a
+            apresentação, já que não há menu para voltar. */}
         <button
           onClick={() => setView('overview')}
           className="fixed top-3 left-3 md:top-4 md:left-4 z-50 flex items-center gap-2 px-3 py-2 font-mono text-[10px] tracking-widest border transition-colors"
-          style={{ background: 'rgba(8,8,7,0.8)', color: '#6A6660', borderColor: '#242120' }}
+          style={{ background: '#DCD7CC', color: '#625E57', borderColor: '#CEC8BC' }}
           onMouseEnter={e => {
-            (e.currentTarget as HTMLElement).style.color = '#EDEAE2';
+            (e.currentTarget as HTMLElement).style.color = '#1A1714';
             (e.currentTarget as HTMLElement).style.borderColor = '#DD3E22';
           }}
           onMouseLeave={e => {
-            (e.currentTarget as HTMLElement).style.color = '#6A6660';
-            (e.currentTarget as HTMLElement).style.borderColor = '#242120';
+            (e.currentTarget as HTMLElement).style.color = '#625E57';
+            (e.currentTarget as HTMLElement).style.borderColor = '#CEC8BC';
           }}
         >
           <ChevronLeft size={12} />

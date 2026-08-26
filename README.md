@@ -33,7 +33,7 @@ O botão **DEMO LONGÃO**, no canto superior direito, inicia uma sequência guia
 | Visão geral | `src/views/Overview.tsx` | Indicadores do dia, pedidos ativos, movimento por hora, mais pedidos, próximo evento |
 | Novo pedido | `src/views/POS.tsx` | PDV: categorias, personalização, painel de café filtrado (grão + método), carrinho e checkout |
 | Produção | `src/views/Production.tsx` | KDS kanban `LARGADA / EM RITMO / CHEGADA` com timer que escala para atenção (5 min) e atrasado (10 min) |
-| Retirada | `src/views/Pickup.tsx` | Painel de TV, sem menu lateral, com destaque em tela cheia quando um pedido fica pronto |
+| Retirada | `src/views/Pickup.tsx` | Painel de salão para TV ou monitor, sem menu lateral, com destaque em tela cheia quando um pedido fica pronto |
 | QR Code | `src/views/Mobile.tsx` | Autoatendimento pelo celular, em moldura de telefone |
 | Cardápio | `src/views/MenuAdmin.tsx` | Alterna disponibilidade — reflete no PDV e no QR Code imediatamente |
 | Relatórios | `src/views/Reports.tsx` | Faturamento, ticket médio, produtos mais vendidos e horários de pico |
@@ -78,9 +78,9 @@ Concreto claro e quente, sem cantos arredondados e sem gradientes — brutalismo
 | Bordas | `#CEC8BC` / `#B4AC9D` |
 | Acento (marca) | `#DD3E22` |
 
-A **Retirada** é a única tela que segue escura (`#080807`): é uma TV vista de longe no salão, onde fundo escuro com números claros lê melhor à distância.
+As sete telas usam o mesmo concreto claro, inclusive a Retirada. Nela a hierarquia é feita por contraste, não por cor de fundo: os pedidos em preparo ficam apagados (`#7D7568`) e os prontos vêm em tinta cheia (`#1A1714`), que é o que faz o pedido pronto saltar no painel.
 
-Todas as combinações de texto sobre fundo foram medidas: o pior caso é 3,66:1, e nenhuma fica abaixo de 3:1.
+Todas as combinações de texto sobre fundo foram medidas: o pior caso é 3,52:1, e nenhuma fica abaixo de 3:1.
 
 Tipografia: **Barlow Condensed** para display e números, **Inter** para interface, **DM Mono** para timers, códigos e etiquetas técnicas.
 
