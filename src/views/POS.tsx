@@ -538,7 +538,11 @@ export default function POS() {
 
       {/* Right: Cart panel */}
       <div
-        className={`fixed md:static inset-x-0 bottom-0 z-50 md:z-auto w-full md:w-[300px] shrink-0 border-t md:border-t-0 md:border-l flex flex-col max-h-[88vh] md:max-h-none md:h-full transition-transform duration-200 ease-out ${
+        className={`fixed md:static inset-x-0 ${
+          demoMode ? 'bottom-16 md:bottom-auto' : 'bottom-0'
+        } z-50 md:z-auto w-full md:w-[300px] shrink-0 border-t md:border-t-0 md:border-l flex flex-col overflow-hidden ${
+          demoMode ? 'max-h-[calc(88vh-4rem)]' : 'max-h-[88vh]'
+        } md:max-h-none md:h-full transition-transform duration-200 ease-out ${
           cartOpen ? 'translate-y-0' : 'translate-y-full'
         } md:translate-y-0`}
         style={{ borderColor: '#CEC8BC', background: '#DCD7CC' }}
@@ -573,8 +577,10 @@ export default function POS() {
           />
         </div>
 
-        {/* Cart items */}
-        <div className="flex-1 overflow-y-auto">
+        {/* No mobile a gaveta inteira rola (`md:contents` some no desktop, e aí
+            a lista rola sozinha com total e botão fixos no rodapé). */}
+        <div className="flex-1 min-h-0 overflow-y-auto md:contents">
+        <div className="md:flex-1 md:min-h-0 md:overflow-y-auto">
           {activeCart.length === 0 ? (
             <div className="p-5 font-mono text-[11px] tracking-widest" style={{ color: '#736B5E' }}>
               NENHUM ITEM
@@ -624,7 +630,7 @@ export default function POS() {
         </div>
 
         {/* Consumption + payment + total */}
-        <div className="border-t p-5 space-y-4 shrink-0" style={{ borderColor: '#CEC8BC' }}>
+        <div className="border-t p-5 space-y-4 md:shrink-0" style={{ borderColor: '#CEC8BC' }}>
           {/* Consumption */}
           <div>
             <div className="font-mono text-[9px] tracking-widest mb-2" style={{ color: '#625E57' }}>
@@ -701,6 +707,7 @@ export default function POS() {
           >
             CONFIRMAR PEDIDO
           </button>
+        </div>
         </div>
       </div>
     </div>

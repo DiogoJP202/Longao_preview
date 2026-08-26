@@ -250,7 +250,7 @@ function Shell() {
     // A Retirada é a única tela que segue escura: é uma TV vista de longe no
     // salão, onde fundo escuro com números claros lê melhor à distância.
     return (
-      <div className="h-full" style={{ background: '#080807' }}>
+      <div className={`h-full ${demoMode ? 'pb-16 md:pb-14' : ''}`} style={{ background: '#080807' }}>
         <Pickup />
         {/* A Retirada não tem menu — é um painel de salão. Sem esta saída
             discreta ela vira um beco sem saída durante a apresentação. */}
@@ -277,12 +277,13 @@ function Shell() {
   }
 
   return (
-    <div className="flex flex-col md:flex-row h-full overflow-hidden" style={{ background: '#E5E2DB' }}>
+    <div
+      className={`flex flex-col md:flex-row h-full overflow-hidden ${demoMode ? 'pb-16 md:pb-14' : ''}`}
+      style={{ background: '#E5E2DB' }}
+    >
       <TopBar onOpen={() => setNavOpen(true)} />
       <Sidebar open={navOpen} onClose={() => setNavOpen(false)} />
-      <main className={`flex-1 min-h-0 overflow-auto relative ${demoMode ? 'pb-16 md:pb-14' : ''}`}>
-        {VIEW_MAP[view]}
-      </main>
+      <main className="flex-1 min-h-0 overflow-auto relative">{VIEW_MAP[view]}</main>
       <DemoBar />
       <Toast />
     </div>
