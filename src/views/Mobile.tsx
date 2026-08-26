@@ -63,15 +63,17 @@ export default function Mobile() {
   };
 
   return (
-    <div className="h-full flex items-center justify-center p-8" style={{ background: '#E5E2DB' }}>
-      <div className="relative" style={{ width: 375, height: 700 }}>
+    <div className="h-full flex items-center justify-center p-0 md:p-8" style={{ background: '#E5E2DB' }}>
+      {/* No desktop a tela aparece dentro de uma moldura de celular; num
+          celular de verdade a moldura sai e a interface ocupa a tela toda. */}
+      <div className="relative w-full h-full md:w-[375px] md:h-[700px] md:max-h-full">
         {/* Phone frame */}
         <div
-          className="absolute inset-0 rounded-[40px] border-2 overflow-hidden shadow-2xl"
+          className="absolute inset-0 flex flex-col rounded-none md:rounded-[40px] border-0 md:border-2 overflow-hidden md:shadow-2xl"
           style={{ borderColor: '#B4AC9D', background: '#DCD7CC' }}
         >
           {/* Status bar */}
-          <div className="flex items-center justify-between px-6 pt-4 pb-2">
+          <div className="hidden md:flex items-center justify-between px-6 pt-4 pb-2 shrink-0">
             <span className="font-mono text-[10px]" style={{ color: '#736B5E' }}>9:41</span>
             <div className="flex gap-1">
               {[1, 1, 0.5].map((o, i) => (
@@ -81,7 +83,7 @@ export default function Mobile() {
           </div>
 
           {/* Screen content */}
-          <div className="h-full overflow-hidden flex flex-col" style={{ height: 'calc(100% - 40px)' }}>
+          <div className="flex-1 min-h-0 overflow-hidden flex flex-col">
             {/* HOME */}
             {mobileView === 'home' && (
               <MobileHome
@@ -147,7 +149,7 @@ export default function Mobile() {
         </div>
 
         {/* Label */}
-        <div className="absolute -bottom-8 left-0 right-0 text-center">
+        <div className="hidden md:block absolute -bottom-8 left-0 right-0 text-center">
           <span className="font-mono text-[10px] tracking-widest" style={{ color: '#736B5E' }}>
             QR CODE / AUTOATENDIMENTO
           </span>

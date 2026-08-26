@@ -46,22 +46,22 @@ export default function Pickup() {
               100% { opacity: 0; pointer-events: none; }
             }
           `}</style>
-          <div className="font-display font-black text-center" style={{ fontSize: '8rem', lineHeight: 1, color: 'white' }}>
+          <div className="font-display font-black text-center text-[4rem] sm:text-[6rem] md:text-[8rem]" style={{ lineHeight: 1, color: 'white' }}>
             #{String(flashOrder.id).padStart(3, '0')}
           </div>
-          <div className="font-display font-black text-center mt-2" style={{ fontSize: '4rem', lineHeight: 1, color: 'white' }}>
+          <div className="font-display font-black text-center mt-2 text-[2rem] sm:text-[3rem] md:text-[4rem] px-4" style={{ lineHeight: 1, color: 'white' }}>
             {flashOrder.customer}
           </div>
-          <div className="font-mono tracking-widest mt-6" style={{ fontSize: '1.2rem', color: 'rgba(255,255,255,0.7)' }}>
+          <div className="font-mono tracking-widest mt-6 text-[0.8rem] md:text-[1.2rem]" style={{ color: 'rgba(255,255,255,0.7)' }}>
             PRONTO PARA RETIRADA
           </div>
         </div>
       )}
 
       {/* Header */}
-      <div className="flex items-end justify-between px-16 pt-14 pb-8 border-b" style={{ borderColor: '#1A1816' }}>
+      <div className="flex items-end justify-between gap-4 px-6 md:px-16 pt-8 md:pt-14 pb-6 md:pb-8 border-b" style={{ borderColor: '#1A1816' }}>
         <div>
-          <div className="font-display font-black tracking-tight" style={{ fontSize: '5rem', lineHeight: 1, color: '#EDEAE2' }}>
+          <div className="font-display font-black tracking-tight text-[2.6rem] sm:text-[3.5rem] md:text-[5rem]" style={{ lineHeight: 1, color: '#EDEAE2' }}>
             LONGÃO
           </div>
           <div className="font-mono text-[12px] tracking-widest mt-2" style={{ color: '#35322C' }}>
@@ -77,24 +77,24 @@ export default function Pickup() {
       </div>
 
       {/* Content */}
-      <div className="flex-1 flex divide-x min-h-0" style={{ borderColor: '#1A1816' }}>
+      <div className="flex-1 flex flex-col md:flex-row divide-y md:divide-y-0 md:divide-x min-h-0 overflow-y-auto md:overflow-visible" style={{ borderColor: '#1A1816' }}>
         {/* Preparing */}
-        <div className="flex-1 px-16 py-10 overflow-y-auto">
+        <div className="flex-1 px-6 md:px-16 py-6 md:py-10 md:overflow-y-auto">
           <div className="font-mono text-[11px] tracking-widest mb-8" style={{ color: '#35322C' }}>
             EM PREPARO
           </div>
-          <div className="space-y-5">
+          <div className="space-y-4 md:space-y-5">
             {preparingOrders.length === 0 && (
               <div className="font-mono text-[12px] tracking-widest" style={{ color: '#1A1816' }}>
                 —
               </div>
             )}
             {preparingOrders.map(order => (
-              <div key={order.id} className="flex items-baseline gap-6">
-                <span className="font-display font-black" style={{ fontSize: '3.5rem', lineHeight: 1, color: '#2E2B27' }}>
+              <div key={order.id} className="flex items-baseline gap-4 md:gap-6">
+                <span className="font-display font-black text-[2.2rem] md:text-[3.5rem]" style={{ lineHeight: 1, color: '#2E2B27' }}>
                   {String(order.id).padStart(3, '0')}
                 </span>
-                <span className="font-display font-bold text-2xl tracking-widest" style={{ color: '#3A3835' }}>
+                <span className="font-display font-bold text-lg md:text-2xl tracking-widest truncate" style={{ color: '#3A3835' }}>
                   {order.customer}
                 </span>
               </div>
@@ -103,11 +103,11 @@ export default function Pickup() {
         </div>
 
         {/* Ready */}
-        <div className="flex-1 px-16 py-10 overflow-y-auto" style={{ background: '#0A0A09' }}>
+        <div className="flex-1 px-6 md:px-16 py-6 md:py-10 md:overflow-y-auto" style={{ background: '#0A0A09' }}>
           <div className="font-mono text-[11px] tracking-widest mb-8" style={{ color: '#4A9B6F' }}>
             PRONTO
           </div>
-          <div className="space-y-5">
+          <div className="space-y-4 md:space-y-5">
             {readyOrders.length === 0 && (
               <div className="font-mono text-[12px] tracking-widest" style={{ color: '#1A1816' }}>
                 —
@@ -116,17 +116,17 @@ export default function Pickup() {
             {readyOrders.map(order => (
               <div
                 key={order.id}
-                className="flex items-baseline gap-6 transition-all duration-500"
+                className="flex items-baseline gap-4 md:gap-6 transition-all duration-500"
                 style={{ animation: order.id === flashId ? 'none' : undefined }}
               >
                 <span
-                  className="font-display font-black"
-                  style={{ fontSize: '5rem', lineHeight: 1, color: '#EDEAE2' }}
+                  className="font-display font-black text-[3rem] md:text-[5rem]"
+                  style={{ lineHeight: 1, color: '#EDEAE2' }}
                 >
                   {String(order.id).padStart(3, '0')}
                 </span>
                 <div>
-                  <div className="font-display font-black text-4xl tracking-widest" style={{ color: '#EDEAE2' }}>
+                  <div className="font-display font-black text-2xl md:text-4xl tracking-widest" style={{ color: '#EDEAE2' }}>
                     {order.customer}
                   </div>
                   <div className="font-mono text-[10px] tracking-widest mt-1" style={{ color: '#4A9B6F' }}>
@@ -141,7 +141,7 @@ export default function Pickup() {
 
       {/* Footer */}
       <div
-        className="px-16 py-5 border-t flex items-center justify-between"
+        className="px-6 md:px-16 py-4 md:py-5 border-t flex items-center justify-between gap-3 shrink-0"
         style={{ borderColor: '#1A1816' }}
       >
         <div className="font-mono text-[10px] tracking-widest" style={{ color: '#1A1816' }}>
@@ -168,9 +168,9 @@ function LiveClock() {
   const m = String(time.getMinutes()).padStart(2, '0');
   const s = String(time.getSeconds()).padStart(2, '0');
   return (
-    <div className="font-display font-black" style={{ fontSize: '2.5rem', lineHeight: 1, color: '#EDEAE2' }}>
+    <div className="font-display font-black text-[1.6rem] md:text-[2.5rem]" style={{ lineHeight: 1, color: '#EDEAE2' }}>
       {h}:{m}
-      <span className="text-2xl" style={{ color: '#35322C' }}>:{s}</span>
+      <span className="text-base md:text-2xl" style={{ color: '#35322C' }}>:{s}</span>
     </div>
   );
 }

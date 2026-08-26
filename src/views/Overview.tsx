@@ -3,13 +3,16 @@ import { HOURLY_DATA, TOP_PRODUCTS } from '../data';
 
 function StatBlock({ label, value, mono = false }: { label: string; value: string; mono?: boolean }) {
   return (
-    <div className="border-r last:border-r-0 px-8 py-6 first:pl-0" style={{ borderColor: '#CEC8BC' }}>
-      <div className="font-mono text-[10px] tracking-widest mb-2" style={{ color: '#625E57' }}>
+    <div
+      className="px-4 md:px-8 py-4 md:py-6 border-r even:border-r-0 md:even:border-r md:last:border-r-0 [&:nth-child(-n+2)]:border-b md:[&:nth-child(-n+2)]:border-b-0 md:first:pl-0"
+      style={{ borderColor: '#CEC8BC' }}
+    >
+      <div className="font-mono text-[9px] md:text-[10px] tracking-widest mb-1.5 md:mb-2" style={{ color: '#625E57' }}>
         {label}
       </div>
       <div
-        className={`font-display font-black leading-none ${mono ? 'font-mono' : ''}`}
-        style={{ fontSize: '2.8rem', color: '#1A1714' }}
+        className={`font-display font-black leading-none text-[1.9rem] md:text-[2.8rem] ${mono ? 'font-mono' : ''}`}
+        style={{ color: '#1A1714' }}
       >
         {value}
       </div>
@@ -74,16 +77,16 @@ export default function Overview() {
   const activeOrders = orders.filter(o => o.status !== 'picked_up').slice(-6).reverse();
 
   return (
-    <div className="p-10 max-w-5xl">
+    <div className="p-5 sm:p-8 md:p-10 max-w-5xl">
       {/* Header */}
-      <div className="flex items-start justify-between mb-12">
+      <div className="flex items-start justify-between gap-4 mb-8 md:mb-12">
         <div>
           <div className="flex items-baseline gap-4">
-            <h1 className="font-display font-black tracking-tight" style={{ fontSize: '3.5rem', lineHeight: 1, color: '#1A1714' }}>
+            <h1 className="font-display font-black tracking-tight text-[2.4rem] sm:text-[3rem] md:text-[3.5rem]" style={{ lineHeight: 1, color: '#1A1714' }}>
               LONGÃO
             </h1>
           </div>
-          <div className="flex items-center gap-4 mt-2">
+          <div className="flex flex-wrap items-center gap-2 sm:gap-4 mt-2">
             <span className="font-mono text-[11px] tracking-widest" style={{ color: '#625E57' }}>
               QUARTA, 26 AGO
             </span>
@@ -102,7 +105,7 @@ export default function Overview() {
       </div>
 
       {/* Stats row */}
-      <div className="border-t border-b flex mb-12" style={{ borderColor: '#CEC8BC' }}>
+      <div className="border-t border-b grid grid-cols-2 md:flex mb-8 md:mb-12" style={{ borderColor: '#CEC8BC' }}>
         <StatBlock label="PEDIDOS HOJE" value={String(todayOrders)} />
         <StatBlock label="EM PREPARO" value={String(inProgress).padStart(2, '0')} />
         <StatBlock label="TEMPO MÉDIO" value="06:42" mono />
@@ -113,10 +116,10 @@ export default function Overview() {
       </div>
 
       {/* Two columns */}
-      <div className="grid grid-cols-[1fr_320px] gap-10">
+      <div className="grid grid-cols-1 lg:grid-cols-[1fr_320px] gap-8 lg:gap-10">
         {/* Left: agora no longão + chart */}
         <div>
-          <div className="flex items-center justify-between mb-6">
+          <div className="flex items-center justify-between gap-3 mb-5 md:mb-6">
             <div>
               <span className="font-display font-bold text-xl tracking-widest" style={{ color: '#1A1714' }}>
                 AGORA NO LONGÃO
@@ -131,23 +134,23 @@ export default function Overview() {
             {activeOrders.map(order => (
               <div
                 key={order.id}
-                className="flex items-center justify-between py-4 border-b"
+                className="flex items-center justify-between gap-3 py-4 border-b"
                 style={{ borderColor: '#CEC8BC' }}
               >
-                <div className="flex items-center gap-4">
-                  <span className="font-display font-black text-2xl w-12" style={{ color: '#1A1714' }}>
+                <div className="flex items-center gap-3 sm:gap-4 min-w-0">
+                  <span className="font-display font-black text-xl sm:text-2xl w-10 sm:w-12 shrink-0" style={{ color: '#1A1714' }}>
                     #{String(order.id).padStart(3, '0')}
                   </span>
-                  <div>
-                    <div className="text-[13px] font-medium" style={{ color: '#1A1714' }}>
+                  <div className="min-w-0">
+                    <div className="text-[13px] font-medium truncate" style={{ color: '#1A1714' }}>
                       {order.customer}
                     </div>
-                    <div className="text-[11px] mt-0.5" style={{ color: '#625E57' }}>
+                    <div className="text-[11px] mt-0.5 truncate" style={{ color: '#625E57' }}>
                       {order.items.map(i => i.name).join(', ')}
                     </div>
                   </div>
                 </div>
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-2 shrink-0">
                   <OrderStatusDot status={order.status} />
                   <span className="font-mono text-[10px] tracking-widest" style={{ color: '#625E57' }}>
                     <StatusLabel status={order.status} />
@@ -167,9 +170,9 @@ export default function Overview() {
         </div>
 
         {/* Right: highlights */}
-        <div className="space-y-8">
+        <div className="space-y-6 md:space-y-8">
           {/* Top product */}
-          <div className="border p-6" style={{ borderColor: '#CEC8BC' }}>
+          <div className="border p-5 md:p-6" style={{ borderColor: '#CEC8BC' }}>
             <div className="font-mono text-[10px] tracking-widest mb-4" style={{ color: '#625E57' }}>
               MAIS PEDIDO HOJE
             </div>
@@ -198,7 +201,7 @@ export default function Overview() {
           </div>
 
           {/* Next event */}
-          <div className="border p-6" style={{ borderColor: '#CEC8BC' }}>
+          <div className="border p-5 md:p-6" style={{ borderColor: '#CEC8BC' }}>
             <div className="font-mono text-[10px] tracking-widest mb-4" style={{ color: '#625E57' }}>
               PRÓXIMO EVENTO
             </div>

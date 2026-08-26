@@ -112,7 +112,7 @@ function OrderCard({ order, onAdvance }: { order: Order; onAdvance: (id: number)
       {isNew && (
         <button
           onClick={() => onAdvance(order.id)}
-          className="w-full py-2 font-mono text-[11px] tracking-widest border transition-all duration-150"
+          className="w-full py-2.5 md:py-2 font-mono text-[11px] tracking-widest border transition-all duration-150"
           style={{ borderColor: '#DD3E22', color: '#DD3E22' }}
           onMouseEnter={e => {
             (e.currentTarget as HTMLElement).style.background = '#DD3E22';
@@ -129,7 +129,7 @@ function OrderCard({ order, onAdvance }: { order: Order; onAdvance: (id: number)
       {isPreparing && (
         <button
           onClick={() => onAdvance(order.id)}
-          className="w-full py-2 font-mono text-[11px] tracking-widest transition-all duration-150"
+          className="w-full py-2.5 md:py-2 font-mono text-[11px] tracking-widest transition-all duration-150"
           style={{ background: '#DD3E22', color: 'white' }}
           onMouseEnter={e => ((e.currentTarget as HTMLElement).style.background = '#B83018')}
           onMouseLeave={e => ((e.currentTarget as HTMLElement).style.background = '#DD3E22')}
@@ -157,9 +157,9 @@ function KanbanColumn({
   accentColor: string;
 }) {
   return (
-    <div className="flex-1 flex flex-col min-h-0">
+    <div className="flex-1 flex flex-col min-h-0 w-[86vw] sm:w-[60vw] shrink-0 snap-start md:w-auto md:shrink">
       {/* Column header */}
-      <div className="px-5 py-4 border-b shrink-0" style={{ borderColor: '#CEC8BC' }}>
+      <div className="px-4 md:px-5 py-4 border-b shrink-0" style={{ borderColor: '#CEC8BC' }}>
         <div className="flex items-center justify-between">
           <div>
             <div className="font-display font-black text-2xl tracking-widest" style={{ color: '#1A1714' }}>
@@ -182,7 +182,7 @@ function KanbanColumn({
       </div>
 
       {/* Cards */}
-      <div className="flex-1 overflow-y-auto p-4 space-y-3">
+      <div className="flex-1 overflow-y-auto p-3 md:p-4 space-y-3">
         {orders.length === 0 && (
           <div className="py-8 font-mono text-[10px] tracking-widest text-center" style={{ color: '#B4AC9D' }}>
             SEM PEDIDOS
@@ -216,7 +216,7 @@ export default function Production() {
     <div className="flex flex-col h-full">
       {/* Top bar */}
       <div
-        className="flex items-center justify-between px-8 py-4 border-b shrink-0"
+        className="flex items-center justify-between gap-3 px-4 md:px-8 py-4 border-b shrink-0"
         style={{ borderColor: '#CEC8BC' }}
       >
         <div className="flex items-center gap-4">
@@ -227,13 +227,13 @@ export default function Production() {
             KDS
           </span>
         </div>
-        <div className="font-mono text-[11px] tracking-widest" style={{ color: '#625E57' }}>
-          {newOrders.length + preparingOrders.length + readyOrders.length} PEDIDOS ATIVOS
+        <div className="font-mono text-[10px] md:text-[11px] tracking-widest text-right shrink-0" style={{ color: '#625E57' }}>
+          {newOrders.length + preparingOrders.length + readyOrders.length} ATIVOS
         </div>
       </div>
 
       {/* Kanban */}
-      <div className="flex-1 flex min-h-0">
+      <div className="flex-1 flex min-h-0 overflow-x-auto snap-x snap-mandatory md:overflow-x-visible">
         <KanbanColumn
           title="LARGADA"
           tag="NOVO PEDIDO"

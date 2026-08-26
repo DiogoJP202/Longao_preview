@@ -38,6 +38,18 @@ O botão **DEMO LONGÃO**, no canto superior direito, inicia uma sequência guia
 | Cardápio | `src/views/MenuAdmin.tsx` | Alterna disponibilidade — reflete no PDV e no QR Code imediatamente |
 | Relatórios | `src/views/Reports.tsx` | Faturamento, ticket médio, produtos mais vendidos e horários de pico |
 
+## Responsividade
+
+A interface funciona de celular a TV, com o corte principal em `md` (768px):
+
+| Contexto | Comportamento |
+| --- | --- |
+| Celular | Menu lateral vira gaveta com barra superior; carrinho do PDV vira gaveta inferior com barra-resumo (`2 ITENS · R$ 38`); kanban da Produção rola horizontalmente com encaixe por coluna; o cardápio deixa de ser tabela e vira blocos; a tela de QR Code perde a moldura de celular e ocupa tudo |
+| Tablet | Menu lateral fixo, carrinho em coluna, grades em duas colunas |
+| Desktop / TV | Layout completo em colunas |
+
+Nenhuma das sete telas gera rolagem horizontal em 375px, 768px ou desktop.
+
 ## Arquitetura
 
 ```

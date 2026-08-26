@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import { X, Plus, Minus, Check, ChevronRight } from 'lucide-react';
 import { useApp } from '../context';
 import { CATEGORIES, MENU_ITEMS, CUSTOMIZATIONS, FILTERED_COFFEE_BEANS, FILTERED_COFFEE_METHODS } from '../data';
@@ -36,13 +36,13 @@ function FilteredCoffeePanel({
 
   return (
     <div className="absolute inset-0 z-30 overflow-y-auto" style={{ background: '#E5E2DB' }}>
-      <div className="p-8 max-w-2xl">
-        <div className="flex items-center justify-between mb-8">
+      <div className="p-5 sm:p-8 max-w-2xl">
+        <div className="flex items-center justify-between gap-3 mb-6 sm:mb-8">
           <div>
             <div className="font-mono text-[10px] tracking-widest mb-1" style={{ color: '#625E57' }}>
               CAFÉ FILTRADO
             </div>
-            <h2 className="font-display font-black text-4xl tracking-tight" style={{ color: '#1A1714' }}>
+            <h2 className="font-display font-black text-3xl sm:text-4xl tracking-tight" style={{ color: '#1A1714' }}>
               FILTRADO
             </h2>
           </div>
@@ -61,7 +61,7 @@ function FilteredCoffeePanel({
           <div className="font-mono text-[10px] tracking-widest mb-4" style={{ color: '#625E57' }}>
             GRÃO DE ORIGEM
           </div>
-          <div className="grid grid-cols-2 gap-3">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             {FILTERED_COFFEE_BEANS.map(b => (
               <button
                 key={b.id}
@@ -96,7 +96,7 @@ function FilteredCoffeePanel({
           <div className="font-mono text-[10px] tracking-widest mb-4" style={{ color: '#625E57' }}>
             MÉTODO DE PREPARO
           </div>
-          <div className="grid grid-cols-3 gap-2">
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
             {FILTERED_COFFEE_METHODS.map(m => (
               <button
                 key={m.id}
@@ -141,7 +141,7 @@ function FilteredCoffeePanel({
         </div>
 
         {/* Summary + Add */}
-        <div className="flex items-center justify-between border-t pt-6" style={{ borderColor: '#CEC8BC' }}>
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-t pt-6" style={{ borderColor: '#CEC8BC' }}>
           <div>
             <div className="font-mono text-[10px] tracking-widest mb-1" style={{ color: '#625E57' }}>
               SELEÇÃO
@@ -152,7 +152,7 @@ function FilteredCoffeePanel({
           </div>
           <button
             onClick={handleAdd}
-            className="flex items-center gap-2 px-6 py-3 font-display font-bold text-lg tracking-widest transition-all duration-150"
+            className="flex items-center justify-center gap-2 w-full sm:w-auto px-6 py-3 font-display font-bold text-lg tracking-widest transition-all duration-150"
             style={{ background: '#DD3E22', color: 'white' }}
             onMouseEnter={e => ((e.currentTarget as HTMLElement).style.background = '#B83018')}
             onMouseLeave={e => ((e.currentTarget as HTMLElement).style.background = '#DD3E22')}
@@ -214,18 +214,18 @@ function CustomizePanel({
 
   return (
     <div className="absolute inset-0 z-30 overflow-y-auto" style={{ background: '#E5E2DB' }}>
-      <div className="p-8 max-w-lg">
-        <div className="flex items-center justify-between mb-8">
-          <div>
+      <div className="p-5 sm:p-8 max-w-lg">
+        <div className="flex items-start justify-between gap-3 mb-6 sm:mb-8">
+          <div className="min-w-0">
             <div className="font-mono text-[10px] tracking-widest mb-1" style={{ color: '#625E57' }}>
               PERSONALIZAR
             </div>
-            <h2 className="font-display font-black text-4xl tracking-tight leading-none" style={{ color: '#1A1714' }}>
+            <h2 className="font-display font-black text-3xl sm:text-4xl tracking-tight leading-none" style={{ color: '#1A1714' }}>
               {product.name.toUpperCase()}
             </h2>
           </div>
-          <div className="flex items-center gap-3">
-            <span className="font-display font-black text-2xl" style={{ color: '#1A1714' }}>
+          <div className="flex items-center gap-3 shrink-0">
+            <span className="font-display font-black text-xl sm:text-2xl" style={{ color: '#1A1714' }}>
               R$ {product.price.toFixed(2).replace('.', ',')}
             </span>
             <button onClick={onClose} style={{ color: '#625E57' }}>
@@ -309,10 +309,10 @@ function ConfirmationOverlay({ orderNum, onDone }: { orderNum: number; onDone: (
       >
         <Check size={32} strokeWidth={2.5} color="white" />
       </div>
-      <div className="font-display font-black tracking-widest" style={{ fontSize: '2.2rem', color: '#1A1714' }}>
+      <div className="font-display font-black tracking-widest text-[1.6rem] sm:text-[2.2rem] text-center px-4" style={{ color: '#1A1714' }}>
         PEDIDO #{String(orderNum).padStart(3, '0')}
       </div>
-      <div className="font-display font-bold text-2xl tracking-widest mt-1" style={{ color: '#DD3E22' }}>
+      <div className="font-display font-bold text-xl sm:text-2xl tracking-widest mt-1" style={{ color: '#DD3E22' }}>
         REGISTRADO
       </div>
       <div className="font-mono text-[11px] tracking-widest mt-4" style={{ color: '#625E57' }}>
@@ -342,9 +342,18 @@ export default function POS() {
   const [customizeFor, setCustomizeFor] = useState<(typeof MENU_ITEMS)[0] | null>(null);
   const [showFilteredPanel, setShowFilteredPanel] = useState(false);
   const [confirmedOrderNum, setConfirmedOrderNum] = useState<number | null>(null);
+  // No mobile o carrinho é uma gaveta inferior; no desktop, coluna fixa.
+  const [cartOpen, setCartOpen] = useState(false);
 
   const isDemoCartStep = demoMode && demoStep === 2;
   const isDemoConfirmed = demoMode && demoStep === 3;
+
+  // No mobile o carrinho vive numa gaveta fechada. No passo da demo que existe
+  // justamente para mostrar o carrinho cheio, ela precisa abrir sozinha.
+  useEffect(() => {
+    if (isDemoCartStep) setCartOpen(true);
+    if (isDemoConfirmed) setCartOpen(false);
+  }, [isDemoCartStep, isDemoConfirmed]);
 
   const demoCart: CartItem[] = [
     { id: 'd1', productId: 'matcha_latte', name: 'Matcha Latte', price: 24, quantity: 1, customizations: ['Aveia', 'Gelado'] },
@@ -394,6 +403,7 @@ export default function POS() {
     setConfirmedOrderNum(orderNum);
     setCart([]);
     setCustomerName('');
+    setCartOpen(false);
   };
 
   const handleConfirmDone = () => {
@@ -404,16 +414,19 @@ export default function POS() {
   return (
     <div className="flex h-full relative" style={{ background: '#E5E2DB' }}>
       {/* Left: Products area */}
-      <div className="flex-1 flex flex-col overflow-hidden relative">
+      <div className="flex-1 flex flex-col overflow-hidden relative min-w-0">
         {/* Category tabs */}
-        <div className="border-b flex gap-0 shrink-0" style={{ borderColor: '#CEC8BC' }}>
+        <div
+          className="border-b flex gap-0 shrink-0 overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+          style={{ borderColor: '#CEC8BC' }}
+        >
           {CATEGORIES.map(cat => {
             const active = selectedCategory === cat.id;
             return (
               <button
                 key={cat.id}
                 onClick={() => setSelectedCategory(cat.id)}
-                className="px-5 py-4 text-[12px] font-medium tracking-wider transition-all border-b-2"
+                className="px-4 md:px-5 py-3.5 md:py-4 text-[12px] font-medium tracking-wider transition-all border-b-2 whitespace-nowrap shrink-0"
                 style={{
                   borderColor: active ? '#DD3E22' : 'transparent',
                   color: active ? '#1A1714' : '#625E57',
@@ -426,8 +439,8 @@ export default function POS() {
         </div>
 
         {/* Products grid */}
-        <div className="flex-1 overflow-y-auto p-6 relative">
-          <div className="grid grid-cols-3 gap-3">
+        <div className="flex-1 overflow-y-auto p-4 md:p-6 pb-24 md:pb-6 relative">
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-2.5 md:gap-3">
             {filteredProducts.map(product => (
               <button
                 key={product.id}
@@ -496,19 +509,58 @@ export default function POS() {
         </div>
       </div>
 
+      {/* Barra-resumo do mobile — abre a gaveta do carrinho */}
+      <button
+        onClick={() => setCartOpen(true)}
+        className={`md:hidden fixed left-0 right-0 z-30 flex items-center justify-between px-5 h-16 border-t ${
+          demoMode ? 'bottom-16' : 'bottom-0'
+        }`}
+        style={{ background: '#DCD7CC', borderColor: '#CEC8BC' }}
+      >
+        <span className="font-mono text-[11px] tracking-widest" style={{ color: '#625E57' }}>
+          {activeCart.length} {activeCart.length === 1 ? 'ITEM' : 'ITENS'} · #{String(displayOrderNum).padStart(3, '0')}
+        </span>
+        <span className="flex items-center gap-2 font-display font-black text-2xl" style={{ color: '#1A1714' }}>
+          R$ {total.toFixed(2).replace('.', ',')}
+          <ChevronRight size={18} style={{ color: '#DD3E22' }} />
+        </span>
+      </button>
+
+      {/* Véu da gaveta */}
+      {cartOpen && (
+        <button
+          aria-label="Fechar pedido"
+          onClick={() => setCartOpen(false)}
+          className="md:hidden fixed inset-0 z-40"
+          style={{ background: 'rgba(26,23,20,0.45)' }}
+        />
+      )}
+
       {/* Right: Cart panel */}
       <div
-        className="w-[300px] shrink-0 border-l flex flex-col"
+        className={`fixed md:static inset-x-0 bottom-0 z-50 md:z-auto w-full md:w-[300px] shrink-0 border-t md:border-t-0 md:border-l flex flex-col max-h-[88vh] md:max-h-none md:h-full transition-transform duration-200 ease-out ${
+          cartOpen ? 'translate-y-0' : 'translate-y-full'
+        } md:translate-y-0`}
         style={{ borderColor: '#CEC8BC', background: '#DCD7CC' }}
       >
         {/* Order header */}
-        <div className="px-5 py-4 border-b" style={{ borderColor: '#CEC8BC' }}>
-          <div className="flex items-center justify-between">
+        <div className="px-5 py-4 border-b shrink-0" style={{ borderColor: '#CEC8BC' }}>
+          <div className="flex items-center justify-between gap-3">
             <div className="font-display font-black text-3xl tracking-tight" style={{ color: '#1A1714' }}>
               #{String(displayOrderNum).padStart(3, '0')}
             </div>
-            <div className="font-mono text-[10px] tracking-widest" style={{ color: '#625E57' }}>
-              NOVO PEDIDO
+            <div className="flex items-center gap-3">
+              <div className="font-mono text-[10px] tracking-widest" style={{ color: '#625E57' }}>
+                NOVO PEDIDO
+              </div>
+              <button
+                onClick={() => setCartOpen(false)}
+                aria-label="Fechar pedido"
+                className="md:hidden -mr-1 p-1"
+                style={{ color: '#625E57' }}
+              >
+                <X size={18} />
+              </button>
             </div>
           </div>
           <input
@@ -572,7 +624,7 @@ export default function POS() {
         </div>
 
         {/* Consumption + payment + total */}
-        <div className="border-t p-5 space-y-4" style={{ borderColor: '#CEC8BC' }}>
+        <div className="border-t p-5 space-y-4 shrink-0" style={{ borderColor: '#CEC8BC' }}>
           {/* Consumption */}
           <div>
             <div className="font-mono text-[9px] tracking-widest mb-2" style={{ color: '#625E57' }}>

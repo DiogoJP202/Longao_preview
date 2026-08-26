@@ -10,11 +10,11 @@ export default function MenuAdmin() {
   const categoryLabel = (id: string) => CATEGORIES.find(c => c.id === id)?.label || id;
 
   return (
-    <div className="p-10 max-w-3xl">
+    <div className="p-5 sm:p-8 md:p-10 max-w-3xl">
       {/* Header */}
-      <div className="mb-10">
+      <div className="mb-8 md:mb-10">
         <div className="flex items-baseline gap-4 mb-2">
-          <h1 className="font-display font-black text-4xl tracking-tight" style={{ color: '#1A1714' }}>
+          <h1 className="font-display font-black text-3xl sm:text-4xl tracking-tight" style={{ color: '#1A1714' }}>
             CARDÁPIO
           </h1>
         </div>
@@ -40,7 +40,7 @@ export default function MenuAdmin() {
       <div className="border" style={{ borderColor: '#CEC8BC' }}>
         {/* Header row */}
         <div
-          className="grid px-5 py-3 border-b font-mono text-[10px] tracking-widest"
+          className="hidden md:grid px-5 py-3 border-b font-mono text-[10px] tracking-widest"
           style={{
             gridTemplateColumns: '1fr 140px 80px 110px',
             borderColor: '#CEC8BC',
@@ -57,7 +57,7 @@ export default function MenuAdmin() {
         {menuItems.map(item => (
           <div
             key={item.id}
-            className="grid px-5 py-3.5 border-b last:border-0 items-center transition-all"
+            className="flex flex-col gap-2 md:gap-0 md:grid px-4 md:px-5 py-3.5 border-b last:border-0 md:items-center transition-all"
             style={{
               gridTemplateColumns: '1fr 140px 80px 110px',
               borderColor: '#CEC8BC',
@@ -77,13 +77,14 @@ export default function MenuAdmin() {
                 </span>
               )}
             </div>
-            <span className="text-[12px]" style={{ color: '#625E57' }}>
-              {categoryLabel(item.category)}
-            </span>
-            <span className="text-[13px] font-mono text-right" style={{ color: '#1A1714' }}>
-              R$ {item.price.toFixed(2).replace('.', ',')}
-            </span>
-            <div className="flex justify-end">
+            <div className="flex items-center justify-between gap-3 md:contents">
+              <span className="text-[12px]" style={{ color: '#625E57' }}>
+                {categoryLabel(item.category)}
+              </span>
+              <span className="text-[13px] font-mono md:text-right" style={{ color: '#1A1714' }}>
+                R$ {item.price.toFixed(2).replace('.', ',')}
+              </span>
+              <div className="flex justify-end">
               <button
                 onClick={() => toggleMenuAvailability(item.id)}
                 className="px-3 py-1 font-mono text-[10px] tracking-widest border transition-all duration-150"
@@ -100,7 +101,8 @@ export default function MenuAdmin() {
                 }}
               >
                 {item.available ? 'DISPONÍVEL' : 'ESGOTADO'}
-              </button>
+                </button>
+              </div>
             </div>
           </div>
         ))}

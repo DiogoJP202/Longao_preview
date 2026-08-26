@@ -5,7 +5,7 @@ function BarH({ label, value, max, accent }: { label: string; value: number; max
   const pct = Math.round((value / max) * 100);
   return (
     <div className="flex items-center gap-4 py-2.5 border-b" style={{ borderColor: '#CEC8BC' }}>
-      <div className="w-36 text-[12px] shrink-0" style={{ color: '#1A1714' }}>
+      <div className="w-24 sm:w-36 text-[12px] shrink-0 truncate" style={{ color: '#1A1714' }}>
         {label}
       </div>
       <div className="flex-1 flex items-center gap-3">
@@ -50,10 +50,10 @@ export default function Reports() {
   const maxProduct = TOP_PRODUCTS[0].count;
 
   return (
-    <div className="p-10 max-w-4xl">
+    <div className="p-5 sm:p-8 md:p-10 max-w-4xl">
       {/* Header */}
-      <div className="mb-10">
-        <h1 className="font-display font-black text-4xl tracking-tight" style={{ color: '#1A1714' }}>
+      <div className="mb-8 md:mb-10">
+        <h1 className="font-display font-black text-3xl sm:text-4xl tracking-tight" style={{ color: '#1A1714' }}>
           RELATÓRIOS
         </h1>
         <div className="font-mono text-[10px] tracking-widest mt-1" style={{ color: '#625E57' }}>
@@ -62,27 +62,24 @@ export default function Reports() {
       </div>
 
       {/* Key metrics */}
-      <div className="grid grid-cols-4 border mb-10" style={{ borderColor: '#CEC8BC' }}>
+      <div className="grid grid-cols-2 md:grid-cols-4 border mb-8 md:mb-10" style={{ borderColor: '#CEC8BC' }}>
         {[
           { label: 'FATURAMENTO', value: `R$ ${revenue.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`, small: true },
           { label: 'PEDIDOS', value: String(totalOrders) },
           { label: 'TICKET MÉDIO', value: `R$ ${avgTicket.toFixed(2).replace('.', ',')}`, small: true },
           { label: 'TEMPO MÉDIO', value: '06:42', mono: true },
-        ].map((m, i) => (
+        ].map(m => (
           <div
             key={m.label}
-            className="px-6 py-6 border-r last:border-r-0"
+            className="px-4 md:px-6 py-4 md:py-6 border-r even:border-r-0 md:even:border-r md:last:border-r-0 [&:nth-child(-n+2)]:border-b md:[&:nth-child(-n+2)]:border-b-0"
             style={{ borderColor: '#CEC8BC' }}
           >
             <div className="font-mono text-[10px] tracking-widest mb-2" style={{ color: '#625E57' }}>
               {m.label}
             </div>
             <div
-              className={`font-display font-black leading-none ${m.mono ? 'font-mono' : ''}`}
-              style={{
-                fontSize: m.small ? '1.6rem' : '2.5rem',
-                color: i === 0 ? '#1A1714' : '#1A1714',
-              }}
+              className={`font-display font-black leading-none ${m.small ? 'text-[1.3rem] md:text-[1.6rem]' : 'text-[1.9rem] md:text-[2.5rem]'} ${m.mono ? 'font-mono' : ''}`}
+              style={{ color: '#1A1714' }}
             >
               {m.value}
             </div>
@@ -91,7 +88,7 @@ export default function Reports() {
       </div>
 
       {/* Two columns */}
-      <div className="grid grid-cols-[1fr_280px] gap-10">
+      <div className="grid grid-cols-1 lg:grid-cols-[1fr_280px] gap-8 lg:gap-10">
         {/* Products */}
         <div>
           <div className="font-mono text-[10px] tracking-widest mb-5" style={{ color: '#625E57' }}>
