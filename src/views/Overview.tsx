@@ -3,13 +3,13 @@ import { HOURLY_DATA, TOP_PRODUCTS } from '../data';
 
 function StatBlock({ label, value, mono = false }: { label: string; value: string; mono?: boolean }) {
   return (
-    <div className="border-r last:border-r-0 px-8 py-6 first:pl-0" style={{ borderColor: '#242120' }}>
-      <div className="font-mono text-[10px] tracking-widest mb-2" style={{ color: '#6A6660' }}>
+    <div className="border-r last:border-r-0 px-8 py-6 first:pl-0" style={{ borderColor: '#CEC8BC' }}>
+      <div className="font-mono text-[10px] tracking-widest mb-2" style={{ color: '#625E57' }}>
         {label}
       </div>
       <div
         className={`font-display font-black leading-none ${mono ? 'font-mono' : ''}`}
-        style={{ fontSize: '2.8rem', color: '#EDEAE2' }}
+        style={{ fontSize: '2.8rem', color: '#1A1714' }}
       >
         {value}
       </div>
@@ -28,10 +28,10 @@ function HourlyChart() {
             style={{
               height: `${(d.count / max) * 100}%`,
               minHeight: 2,
-              background: d.hour === '10h' ? '#DD3E22' : '#2E2B27',
+              background: d.hour === '10h' ? '#DD3E22' : '#B4AC9D',
             }}
           />
-          <span className="font-mono text-[8px]" style={{ color: '#35322C' }}>
+          <span className="font-mono text-[8px]" style={{ color: '#736B5E' }}>
             {d.hour}
           </span>
         </div>
@@ -42,15 +42,15 @@ function HourlyChart() {
 
 function OrderStatusDot({ status }: { status: string }) {
   const map: Record<string, string> = {
-    new: '#D4902A',
+    new: '#8A5A0C',
     preparing: '#DD3E22',
-    ready: '#4A9B6F',
-    picked_up: '#35322C',
+    ready: '#26663F',
+    picked_up: '#736B5E',
   };
   return (
     <span
       className="inline-block w-1.5 h-1.5 rounded-full"
-      style={{ background: map[status] || '#35322C' }}
+      style={{ background: map[status] || '#736B5E' }}
     />
   );
 }
@@ -79,30 +79,30 @@ export default function Overview() {
       <div className="flex items-start justify-between mb-12">
         <div>
           <div className="flex items-baseline gap-4">
-            <h1 className="font-display font-black tracking-tight" style={{ fontSize: '3.5rem', lineHeight: 1, color: '#EDEAE2' }}>
+            <h1 className="font-display font-black tracking-tight" style={{ fontSize: '3.5rem', lineHeight: 1, color: '#1A1714' }}>
               LONGÃO
             </h1>
           </div>
           <div className="flex items-center gap-4 mt-2">
-            <span className="font-mono text-[11px] tracking-widest" style={{ color: '#6A6660' }}>
+            <span className="font-mono text-[11px] tracking-widest" style={{ color: '#625E57' }}>
               QUARTA, 26 AGO
             </span>
-            <span style={{ color: '#35322C' }}>—</span>
-            <span className="font-mono text-[11px] tracking-widest" style={{ color: '#6A6660' }}>
+            <span style={{ color: '#736B5E' }}>—</span>
+            <span className="font-mono text-[11px] tracking-widest" style={{ color: '#625E57' }}>
               VILA BUARQUE
             </span>
           </div>
         </div>
         <div className="text-right">
-          <div className="font-mono text-[10px] tracking-widest mb-1" style={{ color: '#6A6660' }}>
+          <div className="font-mono text-[10px] tracking-widest mb-1" style={{ color: '#625E57' }}>
             ABERTO
           </div>
-          <div className="w-2 h-2 rounded-full ml-auto" style={{ background: '#4A9B6F' }} />
+          <div className="w-2 h-2 rounded-full ml-auto" style={{ background: '#26663F' }} />
         </div>
       </div>
 
       {/* Stats row */}
-      <div className="border-t border-b flex mb-12" style={{ borderColor: '#242120' }}>
+      <div className="border-t border-b flex mb-12" style={{ borderColor: '#CEC8BC' }}>
         <StatBlock label="PEDIDOS HOJE" value={String(todayOrders)} />
         <StatBlock label="EM PREPARO" value={String(inProgress).padStart(2, '0')} />
         <StatBlock label="TEMPO MÉDIO" value="06:42" mono />
@@ -118,38 +118,38 @@ export default function Overview() {
         <div>
           <div className="flex items-center justify-between mb-6">
             <div>
-              <span className="font-display font-bold text-xl tracking-widest" style={{ color: '#EDEAE2' }}>
+              <span className="font-display font-bold text-xl tracking-widest" style={{ color: '#1A1714' }}>
                 AGORA NO LONGÃO
               </span>
             </div>
-            <span className="font-mono text-[10px] tracking-widest" style={{ color: '#6A6660' }}>
+            <span className="font-mono text-[10px] tracking-widest" style={{ color: '#625E57' }}>
               {activeOrders.length} ATIVOS
             </span>
           </div>
 
-          <div className="border-t" style={{ borderColor: '#242120' }}>
+          <div className="border-t" style={{ borderColor: '#CEC8BC' }}>
             {activeOrders.map(order => (
               <div
                 key={order.id}
                 className="flex items-center justify-between py-4 border-b"
-                style={{ borderColor: '#242120' }}
+                style={{ borderColor: '#CEC8BC' }}
               >
                 <div className="flex items-center gap-4">
-                  <span className="font-display font-black text-2xl w-12" style={{ color: '#EDEAE2' }}>
+                  <span className="font-display font-black text-2xl w-12" style={{ color: '#1A1714' }}>
                     #{String(order.id).padStart(3, '0')}
                   </span>
                   <div>
-                    <div className="text-[13px] font-medium" style={{ color: '#EDEAE2' }}>
+                    <div className="text-[13px] font-medium" style={{ color: '#1A1714' }}>
                       {order.customer}
                     </div>
-                    <div className="text-[11px] mt-0.5" style={{ color: '#6A6660' }}>
+                    <div className="text-[11px] mt-0.5" style={{ color: '#625E57' }}>
                       {order.items.map(i => i.name).join(', ')}
                     </div>
                   </div>
                 </div>
                 <div className="flex items-center gap-2">
                   <OrderStatusDot status={order.status} />
-                  <span className="font-mono text-[10px] tracking-widest" style={{ color: '#6A6660' }}>
+                  <span className="font-mono text-[10px] tracking-widest" style={{ color: '#625E57' }}>
                     <StatusLabel status={order.status} />
                   </span>
                 </div>
@@ -159,7 +159,7 @@ export default function Overview() {
 
           {/* Chart */}
           <div className="mt-10">
-            <div className="font-mono text-[10px] tracking-widest mb-4" style={{ color: '#6A6660' }}>
+            <div className="font-mono text-[10px] tracking-widest mb-4" style={{ color: '#625E57' }}>
               MOVIMENTO DO DIA
             </div>
             <HourlyChart />
@@ -169,27 +169,27 @@ export default function Overview() {
         {/* Right: highlights */}
         <div className="space-y-8">
           {/* Top product */}
-          <div className="border p-6" style={{ borderColor: '#242120' }}>
-            <div className="font-mono text-[10px] tracking-widest mb-4" style={{ color: '#6A6660' }}>
+          <div className="border p-6" style={{ borderColor: '#CEC8BC' }}>
+            <div className="font-mono text-[10px] tracking-widest mb-4" style={{ color: '#625E57' }}>
               MAIS PEDIDO HOJE
             </div>
             {TOP_PRODUCTS.slice(0, 3).map((p, i) => (
-              <div key={p.name} className="flex items-center justify-between py-2.5 border-b last:border-0" style={{ borderColor: '#242120' }}>
+              <div key={p.name} className="flex items-center justify-between py-2.5 border-b last:border-0" style={{ borderColor: '#CEC8BC' }}>
                 <div className="flex items-center gap-3">
-                  <span className="font-display font-black text-base w-5" style={{ color: '#35322C' }}>
+                  <span className="font-display font-black text-base w-5" style={{ color: '#736B5E' }}>
                     {i + 1}
                   </span>
-                  <span className="text-[13px]" style={{ color: '#EDEAE2' }}>{p.name}</span>
+                  <span className="text-[13px]" style={{ color: '#1A1714' }}>{p.name}</span>
                 </div>
                 <div className="flex items-center gap-3">
                   <div
                     className="h-1"
                     style={{
                       width: `${(p.count / 24) * 60}px`,
-                      background: i === 0 ? '#DD3E22' : '#2E2B27',
+                      background: i === 0 ? '#DD3E22' : '#B4AC9D',
                     }}
                   />
-                  <span className="font-mono text-[11px]" style={{ color: '#6A6660' }}>
+                  <span className="font-mono text-[11px]" style={{ color: '#625E57' }}>
                     {p.count}
                   </span>
                 </div>
@@ -198,22 +198,22 @@ export default function Overview() {
           </div>
 
           {/* Next event */}
-          <div className="border p-6" style={{ borderColor: '#242120' }}>
-            <div className="font-mono text-[10px] tracking-widest mb-4" style={{ color: '#6A6660' }}>
+          <div className="border p-6" style={{ borderColor: '#CEC8BC' }}>
+            <div className="font-mono text-[10px] tracking-widest mb-4" style={{ color: '#625E57' }}>
               PRÓXIMO EVENTO
             </div>
-            <div className="font-display font-bold text-lg leading-tight" style={{ color: '#EDEAE2' }}>
+            <div className="font-display font-bold text-lg leading-tight" style={{ color: '#1A1714' }}>
               CORRIDA NOTURNA
             </div>
-            <div className="font-mono text-[11px] mt-1" style={{ color: '#6A6660' }}>
+            <div className="font-mono text-[11px] mt-1" style={{ color: '#625E57' }}>
               SEX, 29 AGO — 19H00
             </div>
-            <div className="mt-3 text-[12px]" style={{ color: '#35322C' }}>
+            <div className="mt-3 text-[12px]" style={{ color: '#736B5E' }}>
               Vila Buarque · 5km / 10km
             </div>
             <div
               className="mt-4 inline-block px-3 py-1 text-[10px] font-mono tracking-widest border"
-              style={{ color: '#6A6660', borderColor: '#2E2B27' }}
+              style={{ color: '#625E57', borderColor: '#B4AC9D' }}
             >
               EM BREVE: INTEGRAÇÃO DE EVENTOS
             </div>
@@ -221,13 +221,13 @@ export default function Overview() {
 
           {/* Quick links */}
           <div className="grid grid-cols-2 gap-3">
-            <div className="border p-4" style={{ borderColor: '#242120' }}>
-              <div className="font-mono text-[9px] tracking-widest mb-1" style={{ color: '#6A6660' }}>TICKET MÉDIO</div>
-              <div className="font-display font-black text-2xl" style={{ color: '#EDEAE2' }}>R$ 25,86</div>
+            <div className="border p-4" style={{ borderColor: '#CEC8BC' }}>
+              <div className="font-mono text-[9px] tracking-widest mb-1" style={{ color: '#625E57' }}>TICKET MÉDIO</div>
+              <div className="font-display font-black text-2xl" style={{ color: '#1A1714' }}>R$ 25,86</div>
             </div>
-            <div className="border p-4" style={{ borderColor: '#242120' }}>
-              <div className="font-mono text-[9px] tracking-widest mb-1" style={{ color: '#6A6660' }}>PICO DE HOJE</div>
-              <div className="font-display font-black text-2xl" style={{ color: '#EDEAE2' }}>10H</div>
+            <div className="border p-4" style={{ borderColor: '#CEC8BC' }}>
+              <div className="font-mono text-[9px] tracking-widest mb-1" style={{ color: '#625E57' }}>PICO DE HOJE</div>
+              <div className="font-display font-black text-2xl" style={{ color: '#1A1714' }}>10H</div>
             </div>
           </div>
         </div>

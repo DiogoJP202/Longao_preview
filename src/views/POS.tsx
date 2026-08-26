@@ -35,22 +35,22 @@ function FilteredCoffeePanel({
   };
 
   return (
-    <div className="absolute inset-0 z-30 overflow-y-auto" style={{ background: '#0D0D0C' }}>
+    <div className="absolute inset-0 z-30 overflow-y-auto" style={{ background: '#E5E2DB' }}>
       <div className="p-8 max-w-2xl">
         <div className="flex items-center justify-between mb-8">
           <div>
-            <div className="font-mono text-[10px] tracking-widest mb-1" style={{ color: '#6A6660' }}>
+            <div className="font-mono text-[10px] tracking-widest mb-1" style={{ color: '#625E57' }}>
               CAFÉ FILTRADO
             </div>
-            <h2 className="font-display font-black text-4xl tracking-tight" style={{ color: '#EDEAE2' }}>
+            <h2 className="font-display font-black text-4xl tracking-tight" style={{ color: '#1A1714' }}>
               FILTRADO
             </h2>
           </div>
           <div className="flex items-center gap-3">
-            <span className="font-display font-black text-2xl" style={{ color: '#EDEAE2' }}>
+            <span className="font-display font-black text-2xl" style={{ color: '#1A1714' }}>
               R$ 18,00
             </span>
-            <button onClick={onClose} className="p-2" style={{ color: '#6A6660' }}>
+            <button onClick={onClose} className="p-2" style={{ color: '#625E57' }}>
               <X size={18} />
             </button>
           </div>
@@ -58,7 +58,7 @@ function FilteredCoffeePanel({
 
         {/* Bean selection */}
         <div className="mb-8">
-          <div className="font-mono text-[10px] tracking-widest mb-4" style={{ color: '#6A6660' }}>
+          <div className="font-mono text-[10px] tracking-widest mb-4" style={{ color: '#625E57' }}>
             GRÃO DE ORIGEM
           </div>
           <div className="grid grid-cols-2 gap-3">
@@ -68,21 +68,21 @@ function FilteredCoffeePanel({
                 onClick={() => setSelectedBean(b.id)}
                 className="p-4 text-left border transition-all duration-150"
                 style={{
-                  borderColor: selectedBean === b.id ? '#DD3E22' : '#242120',
-                  background: selectedBean === b.id ? '#1A1412' : 'transparent',
+                  borderColor: selectedBean === b.id ? '#DD3E22' : '#CEC8BC',
+                  background: selectedBean === b.id ? '#F9E6E0' : 'transparent',
                 }}
               >
-                <div className="font-display font-bold text-base" style={{ color: '#EDEAE2' }}>
+                <div className="font-display font-bold text-base" style={{ color: '#1A1714' }}>
                   {b.origin}
                 </div>
-                <div className="font-mono text-[10px] tracking-widest mt-1" style={{ color: '#6A6660' }}>
+                <div className="font-mono text-[10px] tracking-widest mt-1" style={{ color: '#625E57' }}>
                   {b.notes}
                 </div>
                 <div className="flex gap-4 mt-2">
-                  <span className="font-mono text-[9px]" style={{ color: '#35322C' }}>
+                  <span className="font-mono text-[9px]" style={{ color: '#736B5E' }}>
                     {b.altitude}
                   </span>
-                  <span className="font-mono text-[9px]" style={{ color: '#35322C' }}>
+                  <span className="font-mono text-[9px]" style={{ color: '#736B5E' }}>
                     {b.process}
                   </span>
                 </div>
@@ -93,7 +93,7 @@ function FilteredCoffeePanel({
 
         {/* Method selection */}
         <div className="mb-8">
-          <div className="font-mono text-[10px] tracking-widest mb-4" style={{ color: '#6A6660' }}>
+          <div className="font-mono text-[10px] tracking-widest mb-4" style={{ color: '#625E57' }}>
             MÉTODO DE PREPARO
           </div>
           <div className="grid grid-cols-3 gap-2">
@@ -103,8 +103,8 @@ function FilteredCoffeePanel({
                 onClick={() => setSelectedMethod(m.id)}
                 className="p-3 text-left border transition-all duration-150 relative"
                 style={{
-                  borderColor: selectedMethod === m.id ? '#DD3E22' : '#242120',
-                  background: selectedMethod === m.id ? '#1A1412' : 'transparent',
+                  borderColor: selectedMethod === m.id ? '#DD3E22' : '#CEC8BC',
+                  background: selectedMethod === m.id ? '#F9E6E0' : 'transparent',
                 }}
               >
                 {m.recommended && (
@@ -115,10 +115,10 @@ function FilteredCoffeePanel({
                     ★ REC.
                   </div>
                 )}
-                <div className="font-display font-bold text-lg" style={{ color: '#EDEAE2' }}>
+                <div className="font-display font-bold text-lg" style={{ color: '#1A1714' }}>
                   {m.label}
                 </div>
-                <div className="font-mono text-[9px] mt-0.5" style={{ color: '#6A6660' }}>
+                <div className="font-mono text-[9px] mt-0.5" style={{ color: '#625E57' }}>
                   {m.note}
                 </div>
               </button>
@@ -127,12 +127,12 @@ function FilteredCoffeePanel({
         </div>
 
         {/* Barista recommendation */}
-        <div className="border p-4 mb-8 flex items-start gap-3" style={{ borderColor: '#2E2B27', background: '#111110' }}>
+        <div className="border p-4 mb-8 flex items-start gap-3" style={{ borderColor: '#B4AC9D', background: '#EFECE6' }}>
           <div className="font-mono text-[10px] tracking-widest" style={{ color: '#DD3E22' }}>
             ★ BARISTA
           </div>
           <div>
-            <div className="text-[13px]" style={{ color: '#EDEAE2' }}>
+            <div className="text-[13px]" style={{ color: '#1A1714' }}>
               Para o {bean.origin.split(' — ')[0]}, recomendamos o {
                 FILTERED_COFFEE_METHODS.find(m => m.recommended)?.label
               } — destaca as notas de {bean.notes.split(' / ')[0].toLowerCase()} e a acidez natural.
@@ -141,12 +141,12 @@ function FilteredCoffeePanel({
         </div>
 
         {/* Summary + Add */}
-        <div className="flex items-center justify-between border-t pt-6" style={{ borderColor: '#242120' }}>
+        <div className="flex items-center justify-between border-t pt-6" style={{ borderColor: '#CEC8BC' }}>
           <div>
-            <div className="font-mono text-[10px] tracking-widest mb-1" style={{ color: '#6A6660' }}>
+            <div className="font-mono text-[10px] tracking-widest mb-1" style={{ color: '#625E57' }}>
               SELEÇÃO
             </div>
-            <div className="text-[13px]" style={{ color: '#EDEAE2' }}>
+            <div className="text-[13px]" style={{ color: '#1A1714' }}>
               {bean.origin} · {method.label}
             </div>
           </div>
@@ -213,36 +213,36 @@ function CustomizePanel({
   };
 
   return (
-    <div className="absolute inset-0 z-30 overflow-y-auto" style={{ background: '#0D0D0C' }}>
+    <div className="absolute inset-0 z-30 overflow-y-auto" style={{ background: '#E5E2DB' }}>
       <div className="p-8 max-w-lg">
         <div className="flex items-center justify-between mb-8">
           <div>
-            <div className="font-mono text-[10px] tracking-widest mb-1" style={{ color: '#6A6660' }}>
+            <div className="font-mono text-[10px] tracking-widest mb-1" style={{ color: '#625E57' }}>
               PERSONALIZAR
             </div>
-            <h2 className="font-display font-black text-4xl tracking-tight leading-none" style={{ color: '#EDEAE2' }}>
+            <h2 className="font-display font-black text-4xl tracking-tight leading-none" style={{ color: '#1A1714' }}>
               {product.name.toUpperCase()}
             </h2>
           </div>
           <div className="flex items-center gap-3">
-            <span className="font-display font-black text-2xl" style={{ color: '#EDEAE2' }}>
+            <span className="font-display font-black text-2xl" style={{ color: '#1A1714' }}>
               R$ {product.price.toFixed(2).replace('.', ',')}
             </span>
-            <button onClick={onClose} style={{ color: '#6A6660' }}>
+            <button onClick={onClose} style={{ color: '#625E57' }}>
               <X size={18} />
             </button>
           </div>
         </div>
 
         {groups.length === 0 && (
-          <div className="py-6 font-mono text-[11px]" style={{ color: '#6A6660' }}>
+          <div className="py-6 font-mono text-[11px]" style={{ color: '#625E57' }}>
             Sem opções de personalização
           </div>
         )}
 
         {groups.map(group => (
           <div key={group.id} className="mb-6">
-            <div className="font-mono text-[10px] tracking-widest mb-3" style={{ color: '#6A6660' }}>
+            <div className="font-mono text-[10px] tracking-widest mb-3" style={{ color: '#625E57' }}>
               {group.label.toUpperCase()}
             </div>
             <div className="flex flex-wrap gap-2">
@@ -254,9 +254,9 @@ function CustomizePanel({
                     onClick={() => toggleOption(group.id, opt.value, group.type)}
                     className="px-4 py-2 text-[13px] border transition-all duration-100"
                     style={{
-                      borderColor: isSelected ? '#DD3E22' : '#242120',
+                      borderColor: isSelected ? '#DD3E22' : '#CEC8BC',
                       background: isSelected ? '#DD3E22' : 'transparent',
-                      color: isSelected ? 'white' : '#EDEAE2',
+                      color: isSelected ? 'white' : '#1A1714',
                     }}
                   >
                     {opt.label}
@@ -269,7 +269,7 @@ function CustomizePanel({
 
         {/* Note */}
         <div className="mb-8">
-          <div className="font-mono text-[10px] tracking-widest mb-3" style={{ color: '#6A6660' }}>
+          <div className="font-mono text-[10px] tracking-widest mb-3" style={{ color: '#625E57' }}>
             OBSERVAÇÃO
           </div>
           <input
@@ -278,7 +278,7 @@ function CustomizePanel({
             value={note}
             onChange={e => setNote(e.target.value)}
             className="w-full px-4 py-3 text-[13px] outline-none border bg-transparent"
-            style={{ borderColor: '#242120', color: '#EDEAE2' }}
+            style={{ borderColor: '#CEC8BC', color: '#1A1714' }}
           />
         </div>
 
@@ -301,7 +301,7 @@ function ConfirmationOverlay({ orderNum, onDone }: { orderNum: number; onDone: (
   return (
     <div
       className="absolute inset-0 z-40 flex flex-col items-center justify-center"
-      style={{ background: '#0D0D0C' }}
+      style={{ background: '#E5E2DB' }}
     >
       <div
         className="w-16 h-16 rounded-full flex items-center justify-center mb-6"
@@ -309,21 +309,21 @@ function ConfirmationOverlay({ orderNum, onDone }: { orderNum: number; onDone: (
       >
         <Check size={32} strokeWidth={2.5} color="white" />
       </div>
-      <div className="font-display font-black tracking-widest" style={{ fontSize: '2.2rem', color: '#EDEAE2' }}>
+      <div className="font-display font-black tracking-widest" style={{ fontSize: '2.2rem', color: '#1A1714' }}>
         PEDIDO #{String(orderNum).padStart(3, '0')}
       </div>
       <div className="font-display font-bold text-2xl tracking-widest mt-1" style={{ color: '#DD3E22' }}>
         REGISTRADO
       </div>
-      <div className="font-mono text-[11px] tracking-widest mt-4" style={{ color: '#6A6660' }}>
+      <div className="font-mono text-[11px] tracking-widest mt-4" style={{ color: '#625E57' }}>
         ENVIADO PARA PRODUÇÃO
       </div>
       <button
         onClick={onDone}
         className="mt-10 px-8 py-3 font-display font-bold text-lg tracking-widest border transition-all"
-        style={{ borderColor: '#242120', color: '#EDEAE2' }}
+        style={{ borderColor: '#CEC8BC', color: '#1A1714' }}
         onMouseEnter={e => ((e.currentTarget as HTMLElement).style.borderColor = '#DD3E22')}
-        onMouseLeave={e => ((e.currentTarget as HTMLElement).style.borderColor = '#242120')}
+        onMouseLeave={e => ((e.currentTarget as HTMLElement).style.borderColor = '#CEC8BC')}
       >
         NOVO PEDIDO
       </button>
@@ -402,11 +402,11 @@ export default function POS() {
   };
 
   return (
-    <div className="flex h-full relative" style={{ background: '#0D0D0C' }}>
+    <div className="flex h-full relative" style={{ background: '#E5E2DB' }}>
       {/* Left: Products area */}
       <div className="flex-1 flex flex-col overflow-hidden relative">
         {/* Category tabs */}
-        <div className="border-b flex gap-0 shrink-0" style={{ borderColor: '#242120' }}>
+        <div className="border-b flex gap-0 shrink-0" style={{ borderColor: '#CEC8BC' }}>
           {CATEGORIES.map(cat => {
             const active = selectedCategory === cat.id;
             return (
@@ -416,7 +416,7 @@ export default function POS() {
                 className="px-5 py-4 text-[12px] font-medium tracking-wider transition-all border-b-2"
                 style={{
                   borderColor: active ? '#DD3E22' : 'transparent',
-                  color: active ? '#EDEAE2' : '#6A6660',
+                  color: active ? '#1A1714' : '#625E57',
                 }}
               >
                 {cat.label}
@@ -435,36 +435,36 @@ export default function POS() {
                 disabled={!product.available}
                 className="border p-4 text-left transition-all duration-150 group"
                 style={{
-                  borderColor: '#242120',
+                  borderColor: '#CEC8BC',
                   background: 'transparent',
                   opacity: product.available ? 1 : 0.35,
                   cursor: product.available ? 'pointer' : 'not-allowed',
                 }}
                 onMouseEnter={e => {
                   if (product.available) {
-                    (e.currentTarget as HTMLElement).style.borderColor = '#2E2B27';
-                    (e.currentTarget as HTMLElement).style.background = '#111110';
+                    (e.currentTarget as HTMLElement).style.borderColor = '#B4AC9D';
+                    (e.currentTarget as HTMLElement).style.background = '#EFECE6';
                   }
                 }}
                 onMouseLeave={e => {
-                  (e.currentTarget as HTMLElement).style.borderColor = '#242120';
+                  (e.currentTarget as HTMLElement).style.borderColor = '#CEC8BC';
                   (e.currentTarget as HTMLElement).style.background = 'transparent';
                 }}
               >
-                <div className="font-display font-bold text-base leading-tight mb-2" style={{ color: '#EDEAE2' }}>
+                <div className="font-display font-bold text-base leading-tight mb-2" style={{ color: '#1A1714' }}>
                   {product.name.toUpperCase()}
                 </div>
                 <div className="flex items-center justify-between">
-                  <span className="font-mono text-[11px]" style={{ color: '#6A6660' }}>
+                  <span className="font-mono text-[11px]" style={{ color: '#625E57' }}>
                     R$ {product.price.toFixed(2).replace('.', ',')}
                   </span>
                   {!product.available && (
-                    <span className="font-mono text-[8px] tracking-widest px-1.5 py-0.5" style={{ background: '#1A1412', color: '#6A6660' }}>
+                    <span className="font-mono text-[8px] tracking-widest px-1.5 py-0.5" style={{ background: '#F9E6E0', color: '#625E57' }}>
                       ESGOTADO
                     </span>
                   )}
                   {product.isFilteredCoffee && product.available && (
-                    <span className="font-mono text-[8px] tracking-widest px-1.5 py-0.5" style={{ background: '#1A1412', color: '#D4902A' }}>
+                    <span className="font-mono text-[8px] tracking-widest px-1.5 py-0.5" style={{ background: '#F9E6E0', color: '#8A5A0C' }}>
                       MÉTODO
                     </span>
                   )}
@@ -499,15 +499,15 @@ export default function POS() {
       {/* Right: Cart panel */}
       <div
         className="w-[300px] shrink-0 border-l flex flex-col"
-        style={{ borderColor: '#242120', background: '#0A0A09' }}
+        style={{ borderColor: '#CEC8BC', background: '#DCD7CC' }}
       >
         {/* Order header */}
-        <div className="px-5 py-4 border-b" style={{ borderColor: '#242120' }}>
+        <div className="px-5 py-4 border-b" style={{ borderColor: '#CEC8BC' }}>
           <div className="flex items-center justify-between">
-            <div className="font-display font-black text-3xl tracking-tight" style={{ color: '#EDEAE2' }}>
+            <div className="font-display font-black text-3xl tracking-tight" style={{ color: '#1A1714' }}>
               #{String(displayOrderNum).padStart(3, '0')}
             </div>
-            <div className="font-mono text-[10px] tracking-widest" style={{ color: '#6A6660' }}>
+            <div className="font-mono text-[10px] tracking-widest" style={{ color: '#625E57' }}>
               NOVO PEDIDO
             </div>
           </div>
@@ -517,50 +517,50 @@ export default function POS() {
             value={isDemoCartStep || isDemoConfirmed ? activeCustomer : customerName}
             onChange={e => setCustomerName(e.target.value.toUpperCase())}
             className="mt-3 w-full bg-transparent outline-none font-display font-bold text-xl tracking-wide border-b pb-2"
-            style={{ color: '#EDEAE2', borderColor: '#242120' }}
+            style={{ color: '#1A1714', borderColor: '#CEC8BC' }}
           />
         </div>
 
         {/* Cart items */}
         <div className="flex-1 overflow-y-auto">
           {activeCart.length === 0 ? (
-            <div className="p-5 font-mono text-[11px] tracking-widest" style={{ color: '#35322C' }}>
+            <div className="p-5 font-mono text-[11px] tracking-widest" style={{ color: '#736B5E' }}>
               NENHUM ITEM
             </div>
           ) : (
             activeCart.map(item => (
-              <div key={item.id} className="border-b px-5 py-3" style={{ borderColor: '#242120' }}>
+              <div key={item.id} className="border-b px-5 py-3" style={{ borderColor: '#CEC8BC' }}>
                 <div className="flex items-start justify-between gap-2">
                   <div className="flex-1">
                     <div className="flex items-center gap-2">
                       <span className="font-mono text-[11px]" style={{ color: '#DD3E22' }}>
                         {item.quantity}×
                       </span>
-                      <span className="text-[13px] font-medium" style={{ color: '#EDEAE2' }}>
+                      <span className="text-[13px] font-medium" style={{ color: '#1A1714' }}>
                         {item.name}
                       </span>
                     </div>
                     {item.customizations.length > 0 && (
                       <div className="ml-6 mt-0.5">
                         {item.customizations.map(c => (
-                          <div key={c} className="font-mono text-[10px]" style={{ color: '#6A6660' }}>
+                          <div key={c} className="font-mono text-[10px]" style={{ color: '#625E57' }}>
                             ↳ {c}
                           </div>
                         ))}
                       </div>
                     )}
                     {item.note && (
-                      <div className="ml-6 mt-0.5 font-mono text-[10px] italic" style={{ color: '#35322C' }}>
+                      <div className="ml-6 mt-0.5 font-mono text-[10px] italic" style={{ color: '#736B5E' }}>
                         {item.note}
                       </div>
                     )}
                   </div>
                   <div className="flex items-center gap-2">
-                    <span className="font-mono text-[11px]" style={{ color: '#6A6660' }}>
+                    <span className="font-mono text-[11px]" style={{ color: '#625E57' }}>
                       R$ {(item.price * item.quantity).toFixed(2).replace('.', ',')}
                     </span>
                     {!isDemoCartStep && !isDemoConfirmed && (
-                      <button onClick={() => removeFromCart(item.id)} style={{ color: '#35322C' }}>
+                      <button onClick={() => removeFromCart(item.id)} style={{ color: '#736B5E' }}>
                         <X size={12} />
                       </button>
                     )}
@@ -572,10 +572,10 @@ export default function POS() {
         </div>
 
         {/* Consumption + payment + total */}
-        <div className="border-t p-5 space-y-4" style={{ borderColor: '#242120' }}>
+        <div className="border-t p-5 space-y-4" style={{ borderColor: '#CEC8BC' }}>
           {/* Consumption */}
           <div>
-            <div className="font-mono text-[9px] tracking-widest mb-2" style={{ color: '#6A6660' }}>
+            <div className="font-mono text-[9px] tracking-widest mb-2" style={{ color: '#625E57' }}>
               CONSUMO
             </div>
             <div className="flex gap-2">
@@ -585,9 +585,9 @@ export default function POS() {
                   onClick={() => setConsumption(c)}
                   className="flex-1 py-1.5 text-[11px] font-mono tracking-widest border transition-all"
                   style={{
-                    borderColor: consumption === c ? '#DD3E22' : '#242120',
+                    borderColor: consumption === c ? '#DD3E22' : '#CEC8BC',
                     background: consumption === c ? '#DD3E22' : 'transparent',
-                    color: consumption === c ? 'white' : '#6A6660',
+                    color: consumption === c ? 'white' : '#625E57',
                   }}
                 >
                   {c === 'local' ? 'NO LOCAL' : 'VIAGEM'}
@@ -598,7 +598,7 @@ export default function POS() {
 
           {/* Payment */}
           <div>
-            <div className="font-mono text-[9px] tracking-widest mb-2" style={{ color: '#6A6660' }}>
+            <div className="font-mono text-[9px] tracking-widest mb-2" style={{ color: '#625E57' }}>
               PAGAMENTO
             </div>
             <div className="flex gap-2">
@@ -608,9 +608,9 @@ export default function POS() {
                   onClick={() => setPayment(p)}
                   className="flex-1 py-1.5 text-[11px] font-mono tracking-widest border transition-all"
                   style={{
-                    borderColor: payment === p ? '#DD3E22' : '#242120',
+                    borderColor: payment === p ? '#DD3E22' : '#CEC8BC',
                     background: payment === p ? '#DD3E22' : 'transparent',
-                    color: payment === p ? 'white' : '#6A6660',
+                    color: payment === p ? 'white' : '#625E57',
                   }}
                 >
                   {p === 'pix' ? 'PIX' : p === 'card' ? 'CARTÃO' : 'DINHEIRO'}
@@ -620,11 +620,11 @@ export default function POS() {
           </div>
 
           {/* Total */}
-          <div className="flex items-center justify-between py-2 border-t" style={{ borderColor: '#242120' }}>
-            <span className="font-mono text-[10px] tracking-widest" style={{ color: '#6A6660' }}>
+          <div className="flex items-center justify-between py-2 border-t" style={{ borderColor: '#CEC8BC' }}>
+            <span className="font-mono text-[10px] tracking-widest" style={{ color: '#625E57' }}>
               TOTAL
             </span>
-            <span className="font-display font-black text-3xl" style={{ color: '#EDEAE2' }}>
+            <span className="font-display font-black text-3xl" style={{ color: '#1A1714' }}>
               R$ {total.toFixed(2).replace('.', ',')}
             </span>
           </div>
@@ -634,8 +634,8 @@ export default function POS() {
             disabled={activeCart.length === 0 && !isDemoCartStep && !isDemoConfirmed}
             className="w-full py-4 font-display font-bold text-xl tracking-widest transition-all duration-150"
             style={{
-              background: activeCart.length > 0 || isDemoCartStep ? '#DD3E22' : '#1A1816',
-              color: activeCart.length > 0 || isDemoCartStep ? 'white' : '#35322C',
+              background: activeCart.length > 0 || isDemoCartStep ? '#DD3E22' : '#D7D2C7',
+              color: activeCart.length > 0 || isDemoCartStep ? 'white' : '#736B5E',
               cursor: activeCart.length > 0 || isDemoCartStep ? 'pointer' : 'not-allowed',
             }}
             onMouseEnter={e => {

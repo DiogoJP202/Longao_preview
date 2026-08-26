@@ -53,14 +53,22 @@ Não há backend, autenticação, pagamento nem banco de dados. Todo o estado vi
 
 ## Identidade
 
-Tema escuro quente, sem cantos arredondados e sem gradientes. Tokens em `src/index.css`:
+Concreto claro e quente, sem cantos arredondados e sem gradientes — brutalismo editorial, não dashboard. Tokens em `src/index.css`:
 
 | Papel | Cor |
 | --- | --- |
-| Fundo | `#0D0D0C` |
-| Texto | `#EDEAE2` |
-| Acento | `#DD3E22` |
-| Bordas | `#242120` |
+| Fundo (concreto) | `#E5E2DB` |
+| Laje (menu, carrinho) | `#DCD7CC` |
+| Painel elevado | `#EFECE6` |
+| Tinta | `#1A1714` |
+| Texto secundário | `#625E57` |
+| Texto apagado | `#736B5E` |
+| Bordas | `#CEC8BC` / `#B4AC9D` |
+| Acento (marca) | `#DD3E22` |
+
+A **Retirada** é a única tela que segue escura (`#080807`): é uma TV vista de longe no salão, onde fundo escuro com números claros lê melhor à distância.
+
+Todas as combinações de texto sobre fundo foram medidas: o pior caso é 3,66:1, e nenhuma fica abaixo de 3:1.
 
 Tipografia: **Barlow Condensed** para display e números, **Inter** para interface, **DM Mono** para timers, códigos e etiquetas técnicas.
 

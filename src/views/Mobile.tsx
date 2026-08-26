@@ -63,16 +63,16 @@ export default function Mobile() {
   };
 
   return (
-    <div className="h-full flex items-center justify-center p-8" style={{ background: '#0D0D0C' }}>
+    <div className="h-full flex items-center justify-center p-8" style={{ background: '#E5E2DB' }}>
       <div className="relative" style={{ width: 375, height: 700 }}>
         {/* Phone frame */}
         <div
           className="absolute inset-0 rounded-[40px] border-2 overflow-hidden shadow-2xl"
-          style={{ borderColor: '#2E2B27', background: '#0A0A09' }}
+          style={{ borderColor: '#B4AC9D', background: '#DCD7CC' }}
         >
           {/* Status bar */}
           <div className="flex items-center justify-between px-6 pt-4 pb-2">
-            <span className="font-mono text-[10px]" style={{ color: '#35322C' }}>9:41</span>
+            <span className="font-mono text-[10px]" style={{ color: '#736B5E' }}>9:41</span>
             <div className="flex gap-1">
               {[1, 1, 0.5].map((o, i) => (
                 <div key={i} className="w-1 rounded-full" style={{ height: 8, background: `rgba(53,50,44,${o})` }} />
@@ -148,7 +148,7 @@ export default function Mobile() {
 
         {/* Label */}
         <div className="absolute -bottom-8 left-0 right-0 text-center">
-          <span className="font-mono text-[10px] tracking-widest" style={{ color: '#35322C' }}>
+          <span className="font-mono text-[10px] tracking-widest" style={{ color: '#736B5E' }}>
             QR CODE / AUTOATENDIMENTO
           </span>
         </div>
@@ -181,10 +181,10 @@ function MobileHome({
     <div className="flex flex-col h-full">
       {/* Header */}
       <div className="px-6 pt-2 pb-6">
-        <div className="font-display font-black text-4xl tracking-tight leading-none" style={{ color: '#EDEAE2' }}>
+        <div className="font-display font-black text-4xl tracking-tight leading-none" style={{ color: '#1A1714' }}>
           LONGÃO
         </div>
-        <div className="font-mono text-[10px] tracking-widest mt-1" style={{ color: '#6A6660' }}>
+        <div className="font-mono text-[10px] tracking-widest mt-1" style={{ color: '#625E57' }}>
           O QUE VAMOS TOMAR HOJE?
         </div>
       </div>
@@ -197,11 +197,11 @@ function MobileHome({
               key={cat.id}
               onClick={() => onCategorySelect(cat.id)}
               className="border p-4 text-left transition-all"
-              style={{ borderColor: '#242120' }}
+              style={{ borderColor: '#CEC8BC' }}
               onTouchStart={() => {}}
             >
               <div className="text-2xl mb-2">{cat.emoji}</div>
-              <div className="font-display font-bold text-lg tracking-widest" style={{ color: '#EDEAE2' }}>
+              <div className="font-display font-bold text-lg tracking-widest" style={{ color: '#1A1714' }}>
                 {cat.label}
               </div>
             </button>
@@ -239,9 +239,9 @@ function MobileCategoryView({
 }) {
   return (
     <div className="flex flex-col h-full">
-      <div className="flex items-center gap-3 px-4 pt-2 pb-4 border-b" style={{ borderColor: '#242120' }}>
-        <button onClick={onBack} style={{ color: '#6A6660' }}><ArrowLeft size={18} /></button>
-        <span className="font-display font-bold text-xl tracking-widest" style={{ color: '#EDEAE2' }}>
+      <div className="flex items-center gap-3 px-4 pt-2 pb-4 border-b" style={{ borderColor: '#CEC8BC' }}>
+        <button onClick={onBack} style={{ color: '#625E57' }}><ArrowLeft size={18} /></button>
+        <span className="font-display font-bold text-xl tracking-widest" style={{ color: '#1A1714' }}>
           {categoryLabel.toUpperCase()}
         </span>
       </div>
@@ -251,16 +251,16 @@ function MobileCategoryView({
             key={p.id}
             onClick={() => onProduct(p)}
             className="w-full flex items-center justify-between px-5 py-4 border-b text-left"
-            style={{ borderColor: '#242120' }}
+            style={{ borderColor: '#CEC8BC' }}
           >
             <div>
-              <div className="text-[14px] font-medium" style={{ color: '#EDEAE2' }}>{p.name}</div>
+              <div className="text-[14px] font-medium" style={{ color: '#1A1714' }}>{p.name}</div>
             </div>
             <div className="flex items-center gap-2">
-              <span className="font-mono text-[12px]" style={{ color: '#6A6660' }}>
+              <span className="font-mono text-[12px]" style={{ color: '#625E57' }}>
                 R$ {p.price.toFixed(2).replace('.', ',')}
               </span>
-              <ChevronRight size={14} color="#35322C" />
+              <ChevronRight size={14} color="#736B5E" />
             </div>
           </button>
         ))}
@@ -272,12 +272,12 @@ function MobileCategoryView({
 function MobileProductView({ product, onBack, onAdd }: { product: any; onBack: () => void; onAdd: () => void }) {
   return (
     <div className="flex flex-col h-full">
-      <div className="flex items-center gap-3 px-4 pt-2 pb-4 border-b" style={{ borderColor: '#242120' }}>
-        <button onClick={onBack} style={{ color: '#6A6660' }}><ArrowLeft size={18} /></button>
-        <span className="font-mono text-[10px] tracking-widest" style={{ color: '#6A6660' }}>PRODUTO</span>
+      <div className="flex items-center gap-3 px-4 pt-2 pb-4 border-b" style={{ borderColor: '#CEC8BC' }}>
+        <button onClick={onBack} style={{ color: '#625E57' }}><ArrowLeft size={18} /></button>
+        <span className="font-mono text-[10px] tracking-widest" style={{ color: '#625E57' }}>PRODUTO</span>
       </div>
       <div className="flex-1 px-5 pt-6">
-        <div className="font-display font-black text-3xl leading-none" style={{ color: '#EDEAE2' }}>
+        <div className="font-display font-black text-3xl leading-none" style={{ color: '#1A1714' }}>
           {product.name.toUpperCase()}
         </div>
         <div className="font-display font-black text-2xl mt-2" style={{ color: '#DD3E22' }}>
@@ -312,31 +312,31 @@ function MobileCart({
 }) {
   return (
     <div className="flex flex-col h-full">
-      <div className="flex items-center gap-3 px-4 pt-2 pb-4 border-b" style={{ borderColor: '#242120' }}>
-        <button onClick={onBack} style={{ color: '#6A6660' }}><ArrowLeft size={18} /></button>
-        <span className="font-display font-bold text-xl tracking-widest" style={{ color: '#EDEAE2' }}>
+      <div className="flex items-center gap-3 px-4 pt-2 pb-4 border-b" style={{ borderColor: '#CEC8BC' }}>
+        <button onClick={onBack} style={{ color: '#625E57' }}><ArrowLeft size={18} /></button>
+        <span className="font-display font-bold text-xl tracking-widest" style={{ color: '#1A1714' }}>
           SEU PEDIDO
         </span>
       </div>
       <div className="flex-1 overflow-y-auto">
         {cart.map(item => (
-          <div key={item.id} className="flex items-center justify-between px-5 py-3.5 border-b" style={{ borderColor: '#242120' }}>
+          <div key={item.id} className="flex items-center justify-between px-5 py-3.5 border-b" style={{ borderColor: '#CEC8BC' }}>
             <div>
-              <div className="text-[13px] font-medium" style={{ color: '#EDEAE2' }}>{item.name}</div>
-              <div className="font-mono text-[11px]" style={{ color: '#6A6660' }}>
+              <div className="text-[13px] font-medium" style={{ color: '#1A1714' }}>{item.name}</div>
+              <div className="font-mono text-[11px]" style={{ color: '#625E57' }}>
                 R$ {item.price.toFixed(2).replace('.', ',')}
               </div>
             </div>
-            <button onClick={() => onRemove(item.id)} style={{ color: '#35322C' }}>
+            <button onClick={() => onRemove(item.id)} style={{ color: '#736B5E' }}>
               <X size={14} />
             </button>
           </div>
         ))}
       </div>
-      <div className="px-4 pb-4 border-t pt-4 space-y-3" style={{ borderColor: '#242120' }}>
+      <div className="px-4 pb-4 border-t pt-4 space-y-3" style={{ borderColor: '#CEC8BC' }}>
         <div className="flex items-center justify-between">
-          <span className="font-mono text-[11px] tracking-widest" style={{ color: '#6A6660' }}>TOTAL</span>
-          <span className="font-display font-black text-2xl" style={{ color: '#EDEAE2' }}>
+          <span className="font-mono text-[11px] tracking-widest" style={{ color: '#625E57' }}>TOTAL</span>
+          <span className="font-display font-black text-2xl" style={{ color: '#1A1714' }}>
             R$ {total.toFixed(2).replace('.', ',')}
           </span>
         </div>
@@ -361,26 +361,26 @@ function MobileCheckout({
 }) {
   return (
     <div className="flex flex-col h-full">
-      <div className="flex items-center gap-3 px-4 pt-2 pb-4 border-b" style={{ borderColor: '#242120' }}>
-        <button onClick={onBack} style={{ color: '#6A6660' }}><ArrowLeft size={18} /></button>
-        <span className="font-display font-bold text-xl tracking-widest" style={{ color: '#EDEAE2' }}>
+      <div className="flex items-center gap-3 px-4 pt-2 pb-4 border-b" style={{ borderColor: '#CEC8BC' }}>
+        <button onClick={onBack} style={{ color: '#625E57' }}><ArrowLeft size={18} /></button>
+        <span className="font-display font-bold text-xl tracking-widest" style={{ color: '#1A1714' }}>
           FINALIZAR
         </span>
       </div>
       <div className="flex-1 px-5 pt-6 space-y-6">
         <div>
-          <div className="font-mono text-[10px] tracking-widest mb-2" style={{ color: '#6A6660' }}>SEU NOME</div>
+          <div className="font-mono text-[10px] tracking-widest mb-2" style={{ color: '#625E57' }}>SEU NOME</div>
           <input
             type="text"
             value={customerName}
             onChange={e => onNameChange(e.target.value.toUpperCase())}
             placeholder="DIGITE SEU NOME..."
             className="w-full bg-transparent outline-none border-b py-2 font-display font-bold text-xl"
-            style={{ color: '#EDEAE2', borderColor: '#242120' }}
+            style={{ color: '#1A1714', borderColor: '#CEC8BC' }}
           />
         </div>
         <div>
-          <div className="font-mono text-[10px] tracking-widest mb-3" style={{ color: '#6A6660' }}>CONSUMO</div>
+          <div className="font-mono text-[10px] tracking-widest mb-3" style={{ color: '#625E57' }}>CONSUMO</div>
           <div className="flex gap-2">
             {(['local', 'takeaway'] as const).map(c => (
               <button
@@ -388,9 +388,9 @@ function MobileCheckout({
                 onClick={() => onConsumption(c)}
                 className="flex-1 py-3 font-mono text-[11px] tracking-widest border transition-all"
                 style={{
-                  borderColor: consumption === c ? '#DD3E22' : '#242120',
+                  borderColor: consumption === c ? '#DD3E22' : '#CEC8BC',
                   background: consumption === c ? '#DD3E22' : 'transparent',
-                  color: consumption === c ? 'white' : '#6A6660',
+                  color: consumption === c ? 'white' : '#625E57',
                 }}
               >
                 {c === 'local' ? 'NO LOCAL' : 'RETIRADA'}
@@ -398,19 +398,19 @@ function MobileCheckout({
             ))}
           </div>
         </div>
-        <div className="border p-4" style={{ borderColor: '#2E2B27', background: '#111110' }}>
+        <div className="border p-4" style={{ borderColor: '#B4AC9D', background: '#EFECE6' }}>
           <div className="font-mono text-[10px] tracking-widest mb-1" style={{ color: '#DD3E22' }}>
             PAGAMENTO
           </div>
-          <div className="text-[12px]" style={{ color: '#6A6660' }}>
+          <div className="text-[12px]" style={{ color: '#625E57' }}>
             O pagamento pode ser realizado no balcão.
           </div>
         </div>
       </div>
-      <div className="px-4 pb-4 border-t pt-4 space-y-2" style={{ borderColor: '#242120' }}>
+      <div className="px-4 pb-4 border-t pt-4 space-y-2" style={{ borderColor: '#CEC8BC' }}>
         <div className="flex items-center justify-between mb-2">
-          <span className="font-mono text-[11px] tracking-widest" style={{ color: '#6A6660' }}>TOTAL</span>
-          <span className="font-display font-black text-2xl" style={{ color: '#EDEAE2' }}>
+          <span className="font-mono text-[11px] tracking-widest" style={{ color: '#625E57' }}>TOTAL</span>
+          <span className="font-display font-black text-2xl" style={{ color: '#1A1714' }}>
             R$ {total.toFixed(2).replace('.', ',')}
           </span>
         </div>
@@ -435,19 +435,19 @@ function MobileConfirm({ orderId, onDone }: { orderId: number; onDone: () => voi
       >
         <ShoppingBag size={24} color="white" />
       </div>
-      <div className="font-display font-black text-2xl tracking-widest" style={{ color: '#EDEAE2' }}>
+      <div className="font-display font-black text-2xl tracking-widest" style={{ color: '#1A1714' }}>
         PEDIDO #{String(orderId).padStart(3, '0')}
       </div>
       <div className="font-display font-bold text-lg tracking-widest mt-1" style={{ color: '#DD3E22' }}>
         CONFIRMADO
       </div>
-      <div className="font-mono text-[11px] tracking-widest mt-4 mb-8" style={{ color: '#6A6660' }}>
+      <div className="font-mono text-[11px] tracking-widest mt-4 mb-8" style={{ color: '#625E57' }}>
         ACOMPANHE NO PAINEL DE RETIRADA
       </div>
       <button
         onClick={onDone}
         className="px-8 py-3 font-display font-bold text-lg tracking-widest border transition-all"
-        style={{ borderColor: '#242120', color: '#EDEAE2' }}
+        style={{ borderColor: '#CEC8BC', color: '#1A1714' }}
       >
         NOVO PEDIDO
       </button>

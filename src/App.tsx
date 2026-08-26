@@ -38,14 +38,14 @@ function Sidebar() {
   return (
     <aside
       className="flex flex-col shrink-0 w-[200px] h-full border-r"
-      style={{ background: '#0A0A09', borderColor: '#242120' }}
+      style={{ background: '#DCD7CC', borderColor: '#CEC8BC' }}
     >
       {/* Wordmark */}
-      <div className="px-5 pt-7 pb-5 border-b" style={{ borderColor: '#242120' }}>
-        <div className="font-display font-black text-3xl tracking-tight leading-none" style={{ color: '#EDEAE2' }}>
+      <div className="px-5 pt-7 pb-5 border-b" style={{ borderColor: '#CEC8BC' }}>
+        <div className="font-display font-black text-3xl tracking-tight leading-none" style={{ color: '#1A1714' }}>
           LONGÃO
         </div>
-        <div className="mt-1.5 font-mono text-[9px] tracking-widest" style={{ color: '#6A6660' }}>
+        <div className="mt-1.5 font-mono text-[9px] tracking-widest" style={{ color: '#625E57' }}>
           CAFÉ / CORRIDA / VILA BUARQUE
         </div>
       </div>
@@ -60,8 +60,8 @@ function Sidebar() {
               onClick={() => setView(id)}
               className="w-full flex items-center gap-3 px-5 py-2.5 text-left transition-all duration-150"
               style={{
-                background: active ? '#1A1816' : 'transparent',
-                color: active ? '#EDEAE2' : '#6A6660',
+                background: active ? '#D7D2C7' : 'transparent',
+                color: active ? '#1A1714' : '#625E57',
                 borderLeft: `2px solid ${active ? '#DD3E22' : 'transparent'}`,
               }}
             >
@@ -73,17 +73,17 @@ function Sidebar() {
       </nav>
 
       {/* Bottom */}
-      <div className="px-5 py-4 border-t" style={{ borderColor: '#242120' }}>
+      <div className="px-5 py-4 border-t" style={{ borderColor: '#CEC8BC' }}>
         <button
           className="flex items-center gap-3 transition-colors"
-          style={{ color: '#6A6660' }}
-          onMouseEnter={e => (e.currentTarget.style.color = '#EDEAE2')}
-          onMouseLeave={e => (e.currentTarget.style.color = '#6A6660')}
+          style={{ color: '#625E57' }}
+          onMouseEnter={e => (e.currentTarget.style.color = '#1A1714')}
+          onMouseLeave={e => (e.currentTarget.style.color = '#625E57')}
         >
           <Settings size={14} strokeWidth={1.5} />
           <span className="text-[13px]">Configurações</span>
         </button>
-        <div className="mt-3 font-mono text-[9px] tracking-widest" style={{ color: '#35322C' }}>
+        <div className="mt-3 font-mono text-[9px] tracking-widest" style={{ color: '#736B5E' }}>
           LONGÃO OS v0.1
         </div>
       </div>
@@ -102,17 +102,17 @@ function DemoBar() {
         onClick={startDemo}
         className="fixed top-4 right-4 z-50 flex items-center gap-2 px-3 py-2 text-[11px] font-mono tracking-widest font-medium transition-all duration-150 border"
         style={{
-          background: '#0A0A09',
-          color: '#6A6660',
-          borderColor: '#242120',
+          background: '#DCD7CC',
+          color: '#625E57',
+          borderColor: '#CEC8BC',
         }}
         onMouseEnter={e => {
-          (e.currentTarget as HTMLElement).style.color = '#EDEAE2';
+          (e.currentTarget as HTMLElement).style.color = '#1A1714';
           (e.currentTarget as HTMLElement).style.borderColor = '#DD3E22';
         }}
         onMouseLeave={e => {
-          (e.currentTarget as HTMLElement).style.color = '#6A6660';
-          (e.currentTarget as HTMLElement).style.borderColor = '#242120';
+          (e.currentTarget as HTMLElement).style.color = '#625E57';
+          (e.currentTarget as HTMLElement).style.borderColor = '#CEC8BC';
         }}
       >
         <Play size={10} />
@@ -196,8 +196,10 @@ function Shell() {
   };
 
   if (view === 'pickup') {
+    // A Retirada é a única tela que segue escura: é uma TV vista de longe no
+    // salão, onde fundo escuro com números claros lê melhor à distância.
     return (
-      <div className="h-full" style={{ background: '#0D0D0C' }}>
+      <div className="h-full" style={{ background: '#080807' }}>
         <Pickup />
         <DemoBar />
         <Toast />
@@ -206,7 +208,7 @@ function Shell() {
   }
 
   return (
-    <div className="flex h-full overflow-hidden" style={{ background: '#0D0D0C' }}>
+    <div className="flex h-full overflow-hidden" style={{ background: '#E5E2DB' }}>
       <Sidebar />
       <main className="flex-1 overflow-auto relative">
         {VIEW_MAP[view]}

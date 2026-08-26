@@ -26,9 +26,9 @@ function formatTimer(seconds: number) {
 }
 
 function timerColor(seconds: number): string {
-  if (seconds >= 600) return '#C83020'; // 10+ min
-  if (seconds >= 300) return '#D4902A'; // 5-10 min
-  return '#6A6660';
+  if (seconds >= 600) return '#BE2A18'; // 10+ min
+  if (seconds >= 300) return '#8A5A0C'; // 5-10 min
+  return '#625E57';
 }
 
 function timerLabel(seconds: number): string {
@@ -44,24 +44,24 @@ function OrderCard({ order, onAdvance }: { order: Order; onAdvance: (id: number)
 
   const timerStart = isPreparing ? order.startedAt : isReady ? order.startedAt : order.createdAt;
   const elapsed = useTimer(timerStart, isPreparing);
-  const color = isPreparing ? timerColor(elapsed) : '#35322C';
+  const color = isPreparing ? timerColor(elapsed) : '#736B5E';
   const warn = isPreparing ? timerLabel(elapsed) : '';
 
   return (
     <div
       className="border p-4 transition-all duration-300"
       style={{
-        borderColor: isReady ? '#4A9B6F' : isNew ? '#2E2B27' : '#242120',
-        background: isReady ? '#0D1A12' : '#111110',
+        borderColor: isReady ? '#26663F' : isNew ? '#B4AC9D' : '#CEC8BC',
+        background: isReady ? '#E3EFE6' : '#EFECE6',
       }}
     >
       {/* Header */}
       <div className="flex items-start justify-between mb-3">
         <div>
-          <div className="font-display font-black text-3xl leading-none" style={{ color: '#EDEAE2' }}>
+          <div className="font-display font-black text-3xl leading-none" style={{ color: '#1A1714' }}>
             #{String(order.id).padStart(3, '0')}
           </div>
-          <div className="font-display font-bold text-sm tracking-widest mt-0.5" style={{ color: '#6A6660' }}>
+          <div className="font-display font-bold text-sm tracking-widest mt-0.5" style={{ color: '#625E57' }}>
             {order.customer}
           </div>
         </div>
@@ -78,7 +78,7 @@ function OrderCard({ order, onAdvance }: { order: Order; onAdvance: (id: number)
             </div>
           )}
           {order.consumption === 'takeaway' && (
-            <div className="font-mono text-[9px] tracking-widest mt-1" style={{ color: '#6A6660' }}>
+            <div className="font-mono text-[9px] tracking-widest mt-1" style={{ color: '#625E57' }}>
               VIAGEM
             </div>
           )}
@@ -86,20 +86,20 @@ function OrderCard({ order, onAdvance }: { order: Order; onAdvance: (id: number)
       </div>
 
       {/* Items */}
-      <div className="border-t py-2 mb-3 space-y-1.5" style={{ borderColor: '#242120' }}>
+      <div className="border-t py-2 mb-3 space-y-1.5" style={{ borderColor: '#CEC8BC' }}>
         {order.items.map(item => (
           <div key={item.id}>
             <div className="flex items-center gap-2">
               <span className="font-mono text-[10px]" style={{ color: '#DD3E22' }}>
                 {item.quantity}
               </span>
-              <span className="text-[12px] font-medium uppercase tracking-wide" style={{ color: '#EDEAE2' }}>
+              <span className="text-[12px] font-medium uppercase tracking-wide" style={{ color: '#1A1714' }}>
                 {item.name}
               </span>
             </div>
             {item.customizations.length > 0 && (
               <div className="ml-4">
-                <span className="font-mono text-[10px] tracking-widest" style={{ color: '#6A6660' }}>
+                <span className="font-mono text-[10px] tracking-widest" style={{ color: '#625E57' }}>
                   {item.customizations.join(' / ')}
                 </span>
               </div>
@@ -159,10 +159,10 @@ function KanbanColumn({
   return (
     <div className="flex-1 flex flex-col min-h-0">
       {/* Column header */}
-      <div className="px-5 py-4 border-b shrink-0" style={{ borderColor: '#242120' }}>
+      <div className="px-5 py-4 border-b shrink-0" style={{ borderColor: '#CEC8BC' }}>
         <div className="flex items-center justify-between">
           <div>
-            <div className="font-display font-black text-2xl tracking-widest" style={{ color: '#EDEAE2' }}>
+            <div className="font-display font-black text-2xl tracking-widest" style={{ color: '#1A1714' }}>
               {title}
             </div>
             <div className="font-mono text-[10px] tracking-widest mt-0.5" style={{ color: accentColor }}>
@@ -171,12 +171,12 @@ function KanbanColumn({
           </div>
           <div
             className="font-display font-black text-3xl"
-            style={{ color: orders.length > 0 ? accentColor : '#35322C' }}
+            style={{ color: orders.length > 0 ? accentColor : '#736B5E' }}
           >
             {String(orders.length).padStart(2, '0')}
           </div>
         </div>
-        <div className="text-[11px] mt-1" style={{ color: '#35322C' }}>
+        <div className="text-[11px] mt-1" style={{ color: '#736B5E' }}>
           {subtitle}
         </div>
       </div>
@@ -184,7 +184,7 @@ function KanbanColumn({
       {/* Cards */}
       <div className="flex-1 overflow-y-auto p-4 space-y-3">
         {orders.length === 0 && (
-          <div className="py-8 font-mono text-[10px] tracking-widest text-center" style={{ color: '#2E2B27' }}>
+          <div className="py-8 font-mono text-[10px] tracking-widest text-center" style={{ color: '#B4AC9D' }}>
             SEM PEDIDOS
           </div>
         )}
@@ -217,17 +217,17 @@ export default function Production() {
       {/* Top bar */}
       <div
         className="flex items-center justify-between px-8 py-4 border-b shrink-0"
-        style={{ borderColor: '#242120' }}
+        style={{ borderColor: '#CEC8BC' }}
       >
         <div className="flex items-center gap-4">
-          <span className="font-display font-black text-2xl tracking-widest" style={{ color: '#EDEAE2' }}>
+          <span className="font-display font-black text-2xl tracking-widest" style={{ color: '#1A1714' }}>
             PRODUÇÃO
           </span>
-          <span className="font-mono text-[10px] tracking-widest" style={{ color: '#6A6660' }}>
+          <span className="font-mono text-[10px] tracking-widest" style={{ color: '#625E57' }}>
             KDS
           </span>
         </div>
-        <div className="font-mono text-[11px] tracking-widest" style={{ color: '#6A6660' }}>
+        <div className="font-mono text-[11px] tracking-widest" style={{ color: '#625E57' }}>
           {newOrders.length + preparingOrders.length + readyOrders.length} PEDIDOS ATIVOS
         </div>
       </div>
@@ -240,9 +240,9 @@ export default function Production() {
           subtitle="Novo pedido"
           orders={newOrders}
           onAdvance={advanceOrderStatus}
-          accentColor="#D4902A"
+          accentColor="#8A5A0C"
         />
-        <div className="w-px shrink-0" style={{ background: '#242120' }} />
+        <div className="w-px shrink-0" style={{ background: '#CEC8BC' }} />
         <KanbanColumn
           title="EM RITMO"
           tag="PREPARANDO"
@@ -251,14 +251,14 @@ export default function Production() {
           onAdvance={advanceOrderStatus}
           accentColor="#DD3E22"
         />
-        <div className="w-px shrink-0" style={{ background: '#242120' }} />
+        <div className="w-px shrink-0" style={{ background: '#CEC8BC' }} />
         <KanbanColumn
           title="CHEGADA"
           tag="PRONTO"
           subtitle="Pronto"
           orders={readyOrders}
           onAdvance={advanceOrderStatus}
-          accentColor="#4A9B6F"
+          accentColor="#26663F"
         />
       </div>
     </div>
