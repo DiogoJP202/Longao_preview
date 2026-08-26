@@ -1,0 +1,12 @@
+{
+  "title": "LONGÃO OS — Sistema de Pedidos",
+  "description": "Protótipo navegável do sistema de pedidos do Longão — café, corrida e comunidade na Vila Buarque, São Paulo.",
+  "language": "pt-BR",
+  "robots": {
+    "index": false
+  },
+  "accessibility": {
+    "addBypassLinks": false,
+    "ignoreReducedMotion": false
+  }
+}
