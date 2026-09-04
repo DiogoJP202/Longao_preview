@@ -44,7 +44,8 @@ export function restanteDaMesa(table: CafeTable): number {
 }
 
 export function formatBRL(v: number): string {
-  return `R$ ${v.toFixed(2).replace('.', ',')}`;
+  // Separador de milhar importa: o faturamento do dia passa de mil.
+  return `R$ ${v.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
 }
 
 /** Cronômetro da comanda, no formato de prova: MM:SS até 1h, depois HH:MM:SS. */

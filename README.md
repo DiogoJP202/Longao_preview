@@ -39,6 +39,16 @@ O botão **DEMO LONGÃO**, no canto superior direito, inicia uma sequência guia
 | Cardápio | `src/views/MenuAdmin.tsx` | Alterna disponibilidade — reflete no PDV e no QR Code imediatamente |
 | Relatórios | `src/views/Reports.tsx` | Faturamento, ticket médio, produtos mais vendidos e horários de pico |
 
+## Indicadores
+
+Visão geral e Relatórios leem os mesmos números, calculados em `src/resumo.ts` a partir dos pedidos e das comandas em memória. A única parte simulada é o movimento do dia **antes** desta sessão (`BASE_DIA`); daí para frente tudo se move quando alguém clica.
+
+A regra de faturamento evita contar a mesma venda duas vezes: **pedido de balcão** entra quando fica pronto; **consumo de mesa** entra só quando a comanda recebe pagamento — porque o pedido de mesa e a comanda descrevem o mesmo item. Receber R$ 122 numa mesa soma R$ 122 ao faturamento e subtrai os mesmos R$ 122 do total em aberto.
+
+O tempo médio de preparo é a média ponderada entre a base do dia e o que o KDS mediu de verdade (`readyAt − startedAt`), para o indicador reagir sem pular a cada pedido.
+
+A Visão geral também mostra o estado do salão — mesas em uso, valor em aberto, pessoas e permanência média — com atalho para **Mesas e Comandas** e a lista das comandas abertas há mais tempo, que é onde a atenção precisa ir primeiro.
+
 ## Mesas e Comandas
 
 O módulo operacional do salão. A tela abre num mapa por setor — **SALÃO / JARDIM / BALCÃO / EXTERNA** — em que cada mesa mostra número, status, cliente, pessoas, tempo aberto e saldo. O status nunca é comunicado só por cor: cada mesa carrega rótulo e ícone próprios.

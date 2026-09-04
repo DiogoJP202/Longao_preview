@@ -1,8 +1,23 @@
 import { useApp } from '../context';
-import { TOP_PRODUCTS, HOURLY_DATA } from '../data';
+import { calcularResumo, formatMinSeg } from '../resumo';
+import { formatBRL } from '../tabMath';
+import { CATEGORIES } from '../data';
+import { PAYMENT_METHOD_LABELS } from '../dataTables';
 
-function BarH({ label, value, max, accent }: { label: string; value: number; max: number; accent?: boolean }) {
-  const pct = Math.round((value / max) * 100);
+function BarH({
+  label,
+  valor,
+  max,
+  sufixo,
+  accent,
+}: {
+  label: string;
+  valor: number;
+  max: number;
+  sufixo: string;
+  accent?: boolean;
+}) {
+  const pct = Math.round((valor / Math.max(1, max)) * 100);
   return (
     <div className="flex items-center gap-4 py-2.5 border-b" style={{ borderColor: '#CEC8BC' }}>
       <div className="w-24 sm:w-36 text-[12px] shrink-0 truncate" style={{ color: '#1A1714' }}>
@@ -15,8 +30,8 @@ function BarH({ label, value, max, accent }: { label: string; value: number; max
             style={{ width: `${pct}%`, background: accent ? '#DD3E22' : '#B4AC9D' }}
           />
         </div>
-        <span className="font-mono text-[11px] w-8 text-right shrink-0" style={{ color: '#625E57' }}>
-          {value}
+        <span className="font-mono text-[11px] w-12 text-right shrink-0" style={{ color: '#625E57' }}>
+          {sufixo}
         </span>
       </div>
     </div>
@@ -27,31 +42,51 @@ function MiniBar({ value, max, hour, current }: { value: number; max: number; ho
   return (
     <div className="flex flex-col items-center gap-1 flex-1">
       <div
-        className="w-full"
-        style={{
-          height: `${Math.max((value / max) * 64, 2)}px`,
-          background: current ? '#DD3E22' : '#B4AC9D',
-        }}
+        className="w-full transition-all duration-500"
+        style={{ height: `${Math.max((value / Math.max(1, max)) * 64, 2)}px`, background: current ? '#DD3E22' : '#B4AC9D' }}
       />
-      <span className="font-mono text-[8px]" style={{ color: '#736B5E' }}>
+      <span className="font-mono text-[8px]" style={{ color: current ? '#DD3E22' : '#736B5E' }}>
         {hour}
       </span>
     </div>
   );
 }
 
-export default function Reports() {
-  const { orders } = useApp();
+function Bloco({ titulo, children }: { titulo: string; children: React.ReactNode }) {
+  return (
+    <div className="border p-5" style={{ borderColor: '#CEC8BC' }}>
+      <div className="font-mono text-[10px] tracking-widest mb-4" style={{ color: '#625E57' }}>
+        {titulo}
+      </div>
+      {children}
+    </div>
+  );
+}
 
-  const totalOrders = orders.length + 123;
-  const revenue = 3284.50 + orders.filter(o => o.status !== 'new').length * 28;
-  const avgTicket = revenue / totalOrders;
-  const maxHourly = Math.max(...HOURLY_DATA.map(d => d.count));
-  const maxProduct = TOP_PRODUCTS[0].count;
+export default function Reports() {
+  const { orders, tables } = useApp();
+  const r = calcularResumo(orders, tables);
+
+  const maxHourly = Math.max(...r.porHora.map(d => d.count), 1);
+  const maxProduto = r.topProdutos[0]?.count ?? 1;
+  const maxCategoria = r.categorias[0]?.valor ?? 1;
+
+  const indicadores = [
+    { label: 'FATURAMENTO', valor: formatBRL(r.faturamento), small: true },
+    { label: 'PEDIDOS', valor: String(r.pedidosHoje) },
+    { label: 'TICKET MÉDIO', valor: formatBRL(r.ticketMedio), small: true },
+    { label: 'TEMPO MÉDIO', valor: formatMinSeg(r.tempoMedioSeg), mono: true },
+  ];
+
+  const salao = [
+    { label: 'COMANDAS ABERTAS', valor: String(r.comandasAbertas).padStart(2, '0') },
+    { label: 'EM ABERTO', valor: formatBRL(r.totalEmAberto), small: true },
+    { label: 'PESSOAS NO SALÃO', valor: String(r.pessoasNoSalao).padStart(2, '0') },
+    { label: 'PERMANÊNCIA MÉDIA', valor: formatMinSeg(r.permanenciaMediaSeg), mono: true },
+  ];
 
   return (
     <div className="p-5 sm:p-8 md:p-10 max-w-4xl">
-      {/* Header */}
       <div className="mb-8 md:mb-10">
         <h1 className="font-display font-black text-3xl sm:text-4xl tracking-tight" style={{ color: '#1A1714' }}>
           RELATÓRIOS
@@ -61,14 +96,9 @@ export default function Reports() {
         </div>
       </div>
 
-      {/* Key metrics */}
-      <div className="grid grid-cols-2 md:grid-cols-4 border mb-8 md:mb-10" style={{ borderColor: '#CEC8BC' }}>
-        {[
-          { label: 'FATURAMENTO', value: `R$ ${revenue.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`, small: true },
-          { label: 'PEDIDOS', value: String(totalOrders) },
-          { label: 'TICKET MÉDIO', value: `R$ ${avgTicket.toFixed(2).replace('.', ',')}`, small: true },
-          { label: 'TEMPO MÉDIO', value: '06:42', mono: true },
-        ].map(m => (
+      {/* Indicadores do dia */}
+      <div className="grid grid-cols-2 md:grid-cols-4 border mb-4" style={{ borderColor: '#CEC8BC' }}>
+        {indicadores.map(m => (
           <div
             key={m.label}
             className="px-4 md:px-6 py-4 md:py-6 border-r even:border-r-0 md:even:border-r md:last:border-r-0 [&:nth-child(-n+2)]:border-b md:[&:nth-child(-n+2)]:border-b-0"
@@ -78,91 +108,131 @@ export default function Reports() {
               {m.label}
             </div>
             <div
-              className={`font-display font-black leading-none ${m.small ? 'text-[1.3rem] md:text-[1.6rem]' : 'text-[1.9rem] md:text-[2.5rem]'} ${m.mono ? 'font-mono' : ''}`}
+              className={`font-display font-black leading-none ${
+                m.small ? 'text-[1.3rem] md:text-[1.6rem]' : 'text-[1.9rem] md:text-[2.5rem]'
+              } ${m.mono ? 'font-mono' : ''}`}
               style={{ color: '#1A1714' }}
             >
-              {m.value}
+              {m.valor}
             </div>
           </div>
         ))}
       </div>
 
-      {/* Two columns */}
+      {/* Salão */}
+      <div className="grid grid-cols-2 md:grid-cols-4 border mb-8 md:mb-10" style={{ borderColor: '#CEC8BC', background: '#EFECE6' }}>
+        {salao.map(m => (
+          <div
+            key={m.label}
+            className="px-4 md:px-6 py-4 border-r even:border-r-0 md:even:border-r md:last:border-r-0 [&:nth-child(-n+2)]:border-b md:[&:nth-child(-n+2)]:border-b-0"
+            style={{ borderColor: '#CEC8BC' }}
+          >
+            <div className="font-mono text-[9px] tracking-widest mb-1.5" style={{ color: '#625E57' }}>
+              {m.label}
+            </div>
+            <div
+              className={`font-display font-black leading-none text-[1.3rem] md:text-[1.6rem] ${m.mono ? 'font-mono' : ''}`}
+              style={{ color: '#1A1714' }}
+            >
+              {m.valor}
+            </div>
+          </div>
+        ))}
+      </div>
+
       <div className="grid grid-cols-1 lg:grid-cols-[1fr_280px] gap-8 lg:gap-10">
-        {/* Products */}
+        {/* Produtos */}
         <div>
-          <div className="font-mono text-[10px] tracking-widest mb-5" style={{ color: '#625E57' }}>
+          <div className="font-mono text-[10px] tracking-widest mb-4" style={{ color: '#625E57' }}>
             PRODUTOS MAIS VENDIDOS
           </div>
           <div>
-            {TOP_PRODUCTS.map((p, i) => (
-              <BarH key={p.name} label={p.name} value={p.count} max={maxProduct} accent={i === 0} />
+            {r.topProdutos.slice(0, 8).map((p, i) => (
+              <BarH
+                key={p.name}
+                label={p.name}
+                valor={p.count}
+                max={maxProduto}
+                sufixo={String(p.count)}
+                accent={i === 0}
+              />
+            ))}
+          </div>
+
+          <div className="font-mono text-[10px] tracking-widest mt-10 mb-4" style={{ color: '#625E57' }}>
+            FATURAMENTO POR CATEGORIA
+          </div>
+          <div>
+            {r.categorias.map((c, i) => (
+              <BarH
+                key={c.id}
+                label={CATEGORIES.find(x => x.id === c.id)?.label ?? c.id}
+                valor={c.valor}
+                max={maxCategoria}
+                sufixo={`${c.pct}%`}
+                accent={i === 0}
+              />
             ))}
           </div>
         </div>
 
-        {/* Hourly + stats */}
+        {/* Coluna direita */}
         <div className="space-y-8">
-          {/* Hourly */}
           <div>
             <div className="font-mono text-[10px] tracking-widest mb-4" style={{ color: '#625E57' }}>
               HORÁRIOS DE PICO
             </div>
             <div className="flex items-end gap-1 h-16">
-              {HOURLY_DATA.map(d => (
-                <MiniBar key={d.hour} value={d.count} max={maxHourly} hour={d.hour} current={d.hour === '10h'} />
+              {r.porHora.map(d => (
+                <MiniBar key={d.hour} value={d.count} max={maxHourly} hour={d.hour} current={d.atual} />
               ))}
             </div>
             <div className="flex items-center justify-between mt-2">
-              <span className="font-mono text-[9px]" style={{ color: '#736B5E' }}>PICO ÀS 10H</span>
-              <span className="font-mono text-[9px]" style={{ color: '#736B5E' }}>22 PEDIDOS</span>
+              <span className="font-mono text-[9px]" style={{ color: '#736B5E' }}>
+                PICO ÀS {r.picoHora.toUpperCase()}
+              </span>
+              <span className="font-mono text-[9px]" style={{ color: '#736B5E' }}>
+                {r.picoQtd} PEDIDOS
+              </span>
             </div>
           </div>
 
-          {/* Revenue breakdown */}
-          <div className="border p-5" style={{ borderColor: '#CEC8BC' }}>
-            <div className="font-mono text-[10px] tracking-widest mb-4" style={{ color: '#625E57' }}>
-              FATURAMENTO POR CATEGORIA
-            </div>
-            {[
-              { label: 'Café', pct: 42 },
-              { label: 'Matcha & Chá', pct: 28 },
-              { label: 'Comidas', pct: 18 },
-              { label: 'Doces', pct: 12 },
-            ].map(item => (
-              <div key={item.label} className="flex items-center gap-3 mb-2.5">
-                <div className="w-20 text-[12px]" style={{ color: '#1A1714' }}>
-                  {item.label}
+          <Bloco titulo="FORMAS DE PAGAMENTO">
+            {r.pagamentos.map(p => (
+              <div key={p.metodo} className="flex items-center gap-3 mb-2.5">
+                <div className="w-24 text-[12px] truncate" style={{ color: '#1A1714' }}>
+                  {PAYMENT_METHOD_LABELS[p.metodo]}
                 </div>
                 <div className="flex-1 h-0.5 relative" style={{ background: '#D7D2C7' }}>
                   <div
-                    className="absolute left-0 top-0 h-full"
-                    style={{ width: `${item.pct}%`, background: '#B4AC9D' }}
+                    className="absolute left-0 top-0 h-full transition-all duration-700"
+                    style={{ width: `${p.pct}%`, background: '#B4AC9D' }}
                   />
                 </div>
                 <span className="font-mono text-[10px] w-8 text-right" style={{ color: '#625E57' }}>
-                  {item.pct}%
+                  {p.pct}%
                 </span>
               </div>
             ))}
-          </div>
+          </Bloco>
 
-          {/* Payment methods */}
-          <div className="border p-5" style={{ borderColor: '#CEC8BC' }}>
-            <div className="font-mono text-[10px] tracking-widest mb-4" style={{ color: '#625E57' }}>
-              FORMAS DE PAGAMENTO
-            </div>
+          <Bloco titulo="ESTADO DO SALÃO">
             {[
-              { label: 'PIX', pct: 58, color: '#DD3E22' },
-              { label: 'Cartão', pct: 31, color: '#625E57' },
-              { label: 'Dinheiro', pct: 11, color: '#736B5E' },
-            ].map(item => (
-              <div key={item.label} className="flex items-center justify-between mb-2">
-                <span className="text-[12px]" style={{ color: '#1A1714' }}>{item.label}</span>
-                <span className="font-mono text-[11px]" style={{ color: item.color }}>{item.pct}%</span>
+              { label: 'Ocupadas', qtd: r.mesasOcupadas, cor: '#DD3E22' },
+              { label: 'Aguardando pagamento', qtd: r.mesasAguardandoPagamento, cor: '#8A5A0C' },
+              { label: 'Reservadas', qtd: r.mesasReservadas, cor: '#625E57' },
+              { label: 'Livres', qtd: r.mesasLivres, cor: '#736B5E' },
+            ].map(s => (
+              <div key={s.label} className="flex items-center justify-between mb-2">
+                <span className="text-[12px]" style={{ color: '#1A1714' }}>
+                  {s.label}
+                </span>
+                <span className="font-mono text-[11px]" style={{ color: s.cor }}>
+                  {String(s.qtd).padStart(2, '0')}
+                </span>
               </div>
             ))}
-          </div>
+          </Bloco>
         </div>
       </div>
 
