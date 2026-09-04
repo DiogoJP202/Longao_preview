@@ -35,15 +35,18 @@ function StatBlock({ label, value, mono = false }: { label: string; value: strin
 
 function HourlyChart({ dados }: { dados: { hour: string; count: number; atual: boolean }[] }) {
   const max = Math.max(...dados.map(d => d.count), 1);
+  // Altura em pixels, não em porcentagem: a coluna que envolve cada barra tem
+  // altura automática, então uma altura percentual não teria contra o que
+  // resolver e todas as barras achatariam no mínimo.
+  const ALTURA = 72;
   return (
-    <div className="flex items-end gap-1.5 h-20">
+    <div className="flex items-end gap-1.5">
       {dados.map(d => (
         <div key={d.hour} className="flex flex-col items-center gap-1 flex-1">
           <div
             className="w-full transition-all duration-300"
             style={{
-              height: `${(d.count / max) * 100}%`,
-              minHeight: 2,
+              height: Math.max((d.count / max) * ALTURA, 2),
               background: d.atual ? '#DD3E22' : '#B4AC9D',
             }}
           />
