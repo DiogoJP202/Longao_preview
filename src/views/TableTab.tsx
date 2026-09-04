@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import {
   X,
   Plus,
@@ -180,6 +180,35 @@ function Opcoes({
         );
       })}
     </div>
+  );
+}
+
+/** Pisca discretamente quando o valor muda — feedback de total atualizado. */
+function ValorAnimado({ valor, className, style }: { valor: number; className?: string; style?: React.CSSProperties }) {
+  const anterior = useRef(valor);
+  const [pulsando, setPulsando] = useState(false);
+
+  useEffect(() => {
+    if (anterior.current === valor) return;
+    anterior.current = valor;
+    setPulsando(true);
+    const id = setTimeout(() => setPulsando(false), 420);
+    return () => clearTimeout(id);
+  }, [valor]);
+
+  return (
+    <span
+      className={className}
+      style={{
+        ...style,
+        display: 'inline-block',
+        transition: 'transform 200ms ease-out, color 200ms ease-out',
+        transform: pulsando ? 'scale(1.06)' : 'scale(1)',
+        color: pulsando ? '#DD3E22' : style?.color,
+      }}
+    >
+      {formatBRL(valor)}
+    </span>
   );
 }
 
@@ -883,6 +912,7 @@ function GrupoDeAcoes({ titulo, children }: { titulo: string; children: React.Re
 }
 
 function Comanda({ table, tab }: { table: CafeTable; tab: Tab }) {
+  const { removeDiscount } = useApp();
   const sub = subtotal(tab);
   const desc = valorDoDesconto(tab);
   const tot = total(tab);
@@ -950,11 +980,22 @@ function Comanda({ table, tab }: { table: CafeTable; tab: Tab }) {
           <span className="font-mono">{formatBRL(sub)}</span>
         </div>
         {desc > 0 && (
-          <div className="flex justify-between text-[13px]" style={{ color: '#DD3E22' }}>
-            <span>
-              Desconto {tab.discount?.kind === 'percent' ? `${tab.discount.amount}%` : ''} · {tab.discount?.reason}
+          <div className="flex justify-between items-center gap-2 text-[13px]" style={{ color: '#DD3E22' }}>
+            <span className="flex items-center gap-2 min-w-0">
+              <span className="truncate">
+                Desconto {tab.discount?.kind === 'percent' ? `${tab.discount.amount}%` : ''} · {tab.discount?.reason}
+              </span>
+              <button
+                onClick={() => removeDiscount(table.id)}
+                aria-label="Remover desconto"
+                title="Remover desconto"
+                className="shrink-0 p-0.5"
+                style={{ color: '#736B5E' }}
+              >
+                <X size={12} />
+              </button>
             </span>
-            <span className="font-mono">− {formatBRL(desc)}</span>
+            <span className="font-mono shrink-0">− {formatBRL(desc)}</span>
           </div>
         )}
         {jaPago > 0 && (
@@ -967,9 +1008,11 @@ function Comanda({ table, tab }: { table: CafeTable; tab: Tab }) {
           <span className="font-mono text-[10px] tracking-widest" style={{ color: '#625E57' }}>
             {jaPago > 0 ? 'RESTANTE' : 'TOTAL'}
           </span>
-          <span className="font-display font-black text-3xl leading-none" style={{ color: '#1A1714' }}>
-            {formatBRL(jaPago > 0 ? falta : tot)}
-          </span>
+          <ValorAnimado
+            valor={jaPago > 0 ? falta : tot}
+            className="font-display font-black text-3xl leading-none"
+            style={{ color: '#1A1714' }}
+          />
         </div>
       </div>
 
@@ -1044,6 +1087,12 @@ export default function TableTab({ tableId, onClose }: { tableId: string; onClos
   const { tables, setView, setPosTarget, requestPayment, unmergeTable } = useApp();
   const [modal, setModal] = useState<Modal>(null);
   const [valorSugerido, setValorSugerido] = useState(0);
+  // Entrada do painel: sobe no celular, entra pela direita no desktop.
+  const [entrou, setEntrou] = useState(false);
+  useEffect(() => {
+    const id = requestAnimationFrame(() => setEntrou(true));
+    return () => cancelAnimationFrame(id);
+  }, []);
 
   const table = tables.find(t => t.id === tableId);
   if (!table) return null;
@@ -1185,13 +1234,15 @@ export default function TableTab({ tableId, onClose }: { tableId: string; onClos
       <button
         aria-label="Fechar painel"
         onClick={onClose}
-        className="fixed inset-0 z-40"
-        style={{ background: 'rgba(26,23,20,0.45)' }}
+        className="fixed inset-0 z-40 transition-opacity duration-200"
+        style={{ background: 'rgba(26,23,20,0.45)', opacity: entrou ? 1 : 0 }}
       />
 
       {/* Painel */}
       <aside
-        className="fixed inset-x-0 bottom-0 top-auto md:inset-y-0 md:left-auto md:right-0 z-50 w-full md:w-[420px] max-h-[92vh] md:max-h-none flex flex-col border-t md:border-t-0 md:border-l overflow-hidden"
+        className={`fixed inset-x-0 bottom-0 top-auto md:inset-y-0 md:left-auto md:right-0 z-50 w-full md:w-[420px] max-h-[92vh] md:max-h-none flex flex-col border-t md:border-t-0 md:border-l overflow-hidden transition-transform duration-200 ease-out ${
+          entrou ? 'translate-y-0 md:translate-x-0' : 'translate-y-full md:translate-y-0 md:translate-x-full'
+        }`}
         style={{ background: '#E5E2DB', borderColor: '#CEC8BC' }}
       >
         <div className="flex-1 min-h-0 overflow-y-auto relative">
