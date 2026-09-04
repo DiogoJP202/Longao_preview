@@ -7,6 +7,7 @@ import Production from './views/Production';
 import Pickup from './views/Pickup';
 import Mobile from './views/Mobile';
 import MenuAdmin from './views/MenuAdmin';
+import Tables from './views/Tables';
 import Reports from './views/Reports';
 import {
   LayoutGrid,
@@ -22,11 +23,13 @@ import {
   X,
   Play,
   Menu,
+  Grid2x2,
 } from 'lucide-react';
 
 const NAV: { id: AppView; label: string; Icon: React.FC<{ size?: number; strokeWidth?: number }> }[] = [
   { id: 'overview', label: 'Visão geral', Icon: LayoutGrid },
   { id: 'pos', label: 'Novo pedido', Icon: Plus },
+  { id: 'tables', label: 'Mesas', Icon: Grid2x2 },
   { id: 'production', label: 'Produção', Icon: Layers },
   { id: 'pickup', label: 'Retirada', Icon: Monitor },
   { id: 'mobile', label: 'QR Code', Icon: Smartphone },
@@ -239,6 +242,7 @@ function Shell() {
   const VIEW_MAP: Record<AppView, React.ReactNode> = {
     overview: <Overview />,
     pos: <POS />,
+    tables: <Tables />,
     production: <Production />,
     pickup: <Pickup />,
     mobile: <Mobile />,

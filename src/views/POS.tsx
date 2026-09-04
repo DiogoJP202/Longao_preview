@@ -333,7 +333,9 @@ function ConfirmationOverlay({ orderNum, onDone }: { orderNum: number; onDone: (
 
 // ─── Main POS View ────────────────────────────────────────────────────────────
 export default function POS() {
-  const { orders, addOrder, menuItems, demoMode, demoStep } = useApp();
+  const { orders, addOrder, menuItems, demoMode, demoStep, posTarget, setPosTarget, addItemsToTab, setView, tables } =
+    useApp();
+  const mesaAlvo = posTarget ? tables.find(t => t.id === posTarget.tableId) : undefined;
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [cart, setCart] = useState<CartItem[]>([]);
   const [customerName, setCustomerName] = useState('');
@@ -388,6 +390,27 @@ export default function POS() {
     setCart(prev => prev.filter(i => i.id !== id));
   }, []);
 
+  // Quando o PDV é aberto a partir de uma comanda, o mesmo carrinho vira
+  // lançamento na mesa em vez de um pedido avulso.
+  const confirmarNaComanda = () => {
+    if (!posTarget) return;
+    addItemsToTab(
+      posTarget.tableId,
+      cart.map(i => ({
+        id: i.id,
+        productId: i.productId,
+        name: i.name,
+        price: i.price,
+        quantity: i.quantity,
+        customizations: i.customizations,
+        addedAt: new Date(),
+      }))
+    );
+    setCart([]);
+    setPosTarget(null);
+    setView('tables');
+  };
+
   const confirmOrder = () => {
     const orderNum = nextOrderNum;
     addOrder({
@@ -415,6 +438,30 @@ export default function POS() {
     <div className="flex h-full relative" style={{ background: '#E5E2DB' }}>
       {/* Left: Products area */}
       <div className="flex-1 flex flex-col overflow-hidden relative min-w-0">
+        {/* Contexto da comanda — o PDV é o mesmo, só muda para onde o item vai. */}
+        {posTarget && (
+          <div
+            className="flex items-center justify-between gap-3 px-4 md:px-6 py-2.5 shrink-0"
+            style={{ background: '#F9E6E0', borderBottom: '1px solid #CEC8BC' }}
+          >
+            <span className="font-mono text-[11px] tracking-widest truncate" style={{ color: '#DD3E22' }}>
+              ADICIONANDO À {posTarget.label}
+              {mesaAlvo?.tab ? ` · ${mesaAlvo.tab.customer}` : ''}
+            </span>
+            <button
+              onClick={() => {
+                setPosTarget(null);
+                setCart([]);
+                setView('tables');
+              }}
+              className="font-mono text-[10px] tracking-widest shrink-0"
+              style={{ color: '#625E57' }}
+            >
+              CANCELAR
+            </button>
+          </div>
+        )}
+
         {/* Category tabs */}
         <div
           className="border-b flex gap-0 shrink-0 overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
@@ -550,12 +597,12 @@ export default function POS() {
         {/* Order header */}
         <div className="px-5 py-4 border-b shrink-0" style={{ borderColor: '#CEC8BC' }}>
           <div className="flex items-center justify-between gap-3">
-            <div className="font-display font-black text-3xl tracking-tight" style={{ color: '#1A1714' }}>
-              #{String(displayOrderNum).padStart(3, '0')}
+            <div className="font-display font-black text-3xl tracking-tight truncate" style={{ color: '#1A1714' }}>
+              {posTarget ? posTarget.label : `#${String(displayOrderNum).padStart(3, '0')}`}
             </div>
             <div className="flex items-center gap-3">
-              <div className="font-mono text-[10px] tracking-widest" style={{ color: '#625E57' }}>
-                NOVO PEDIDO
+              <div className="font-mono text-[10px] tracking-widest text-right shrink-0" style={{ color: posTarget ? '#DD3E22' : '#625E57' }}>
+                {posTarget ? 'NA COMANDA' : 'NOVO PEDIDO'}
               </div>
               <button
                 onClick={() => setCartOpen(false)}
@@ -567,14 +614,24 @@ export default function POS() {
               </button>
             </div>
           </div>
-          <input
-            type="text"
-            placeholder="Nome do cliente..."
-            value={isDemoCartStep || isDemoConfirmed ? activeCustomer : customerName}
-            onChange={e => setCustomerName(e.target.value.toUpperCase())}
-            className="mt-3 w-full bg-transparent outline-none font-display font-bold text-xl tracking-wide border-b pb-2"
-            style={{ color: '#1A1714', borderColor: '#CEC8BC' }}
-          />
+          {/* Numa comanda o cliente já está definido na mesa. */}
+          {posTarget ? (
+            <div
+              className="mt-3 w-full font-display font-bold text-xl tracking-wide border-b pb-2"
+              style={{ color: '#1A1714', borderColor: '#CEC8BC' }}
+            >
+              {mesaAlvo?.tab?.customer ?? 'COMANDA'}
+            </div>
+          ) : (
+            <input
+              type="text"
+              placeholder="Nome do cliente..."
+              value={isDemoCartStep || isDemoConfirmed ? activeCustomer : customerName}
+              onChange={e => setCustomerName(e.target.value.toUpperCase())}
+              className="mt-3 w-full bg-transparent outline-none font-display font-bold text-xl tracking-wide border-b pb-2"
+              style={{ color: '#1A1714', borderColor: '#CEC8BC' }}
+            />
+          )}
         </div>
 
         {/* No mobile a gaveta inteira rola (`md:contents` some no desktop, e aí
@@ -688,7 +745,7 @@ export default function POS() {
           </div>
 
           <button
-            onClick={confirmOrder}
+            onClick={posTarget ? confirmarNaComanda : confirmOrder}
             disabled={activeCart.length === 0 && !isDemoCartStep && !isDemoConfirmed}
             className="w-full py-4 font-display font-bold text-xl tracking-widest transition-all duration-150"
             style={{
@@ -705,7 +762,7 @@ export default function POS() {
                 (e.currentTarget as HTMLElement).style.background = '#DD3E22';
             }}
           >
-            CONFIRMAR PEDIDO
+            {posTarget ? 'ADICIONAR À COMANDA' : 'CONFIRMAR PEDIDO'}
           </button>
         </div>
         </div>

@@ -61,9 +61,22 @@ function OrderCard({ order, onAdvance }: { order: Order; onAdvance: (id: number)
           <div className="font-display font-black text-3xl leading-none" style={{ color: '#1A1714' }}>
             #{String(order.id).padStart(3, '0')}
           </div>
-          <div className="font-display font-bold text-sm tracking-widest mt-0.5" style={{ color: '#625E57' }}>
-            {order.customer}
-          </div>
+          {/* Pedido de mesa: o barista precisa saber onde entregar, então a
+              mesa vem em destaque e o nome do cliente logo abaixo. */}
+          {order.tableLabel ? (
+            <>
+              <div className="font-display font-black text-base tracking-widest mt-0.5" style={{ color: '#DD3E22' }}>
+                {order.tableLabel}
+              </div>
+              <div className="font-display font-bold text-xs tracking-widest" style={{ color: '#625E57' }}>
+                {order.customer}
+              </div>
+            </>
+          ) : (
+            <div className="font-display font-bold text-sm tracking-widest mt-0.5" style={{ color: '#625E57' }}>
+              {order.customer}
+            </div>
+          )}
         </div>
         <div className="text-right">
           <div

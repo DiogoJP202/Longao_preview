@@ -32,11 +32,41 @@ O botão **DEMO LONGÃO**, no canto superior direito, inicia uma sequência guia
 | --- | --- | --- |
 | Visão geral | `src/views/Overview.tsx` | Indicadores do dia, pedidos ativos, movimento por hora, mais pedidos, próximo evento |
 | Novo pedido | `src/views/POS.tsx` | PDV: categorias, personalização, painel de café filtrado (grão + método), carrinho e checkout |
+| Mesas | `src/views/Tables.tsx` | Mapa do salão por setor, comandas abertas, busca e alternância mapa/lista |
 | Produção | `src/views/Production.tsx` | KDS kanban `LARGADA / EM RITMO / CHEGADA` com timer que escala para atenção (5 min) e atrasado (10 min) |
 | Retirada | `src/views/Pickup.tsx` | Painel de salão para TV ou monitor, sem menu lateral, com destaque em tela cheia quando um pedido fica pronto |
 | QR Code | `src/views/Mobile.tsx` | Autoatendimento pelo celular, em moldura de telefone |
 | Cardápio | `src/views/MenuAdmin.tsx` | Alterna disponibilidade — reflete no PDV e no QR Code imediatamente |
 | Relatórios | `src/views/Reports.tsx` | Faturamento, ticket médio, produtos mais vendidos e horários de pico |
+
+## Mesas e Comandas
+
+O módulo operacional do salão. A tela abre num mapa por setor — **SALÃO / JARDIM / BALCÃO / EXTERNA** — em que cada mesa mostra número, status, cliente, pessoas, tempo aberto e saldo. O status nunca é comunicado só por cor: cada mesa carrega rótulo e ícone próprios.
+
+Clicar numa mesa abre o painel da comanda:
+
+| Grupo | Ações |
+| --- | --- |
+| Comanda | Adicionar itens (abre o PDV existente no modo comanda), receber pagamento |
+| Pagamento | Dividir conta (por pessoa, por valor ou por item), aplicar desconto (conta inteira ou item, em % ou R$, com motivo e responsável) |
+| Mesa | Transferir comanda para outra mesa, juntar mesas |
+| Outros | Cancelar itens com motivo, editar cliente |
+
+Comandas ficam abertas por natureza — adicionar itens não força pagamento. Pagamentos podem ser parciais e ficam registrados com forma e horário; a mesa segue ocupada com o saldo restante, e novos itens continuam entrando. Itens cancelados não somem: ficam riscados na comanda com o motivo, para auditoria. Cada comanda mantém um histórico com horário de cada evento.
+
+**Integração com o KDS.** Itens lançados numa mesa viram um pedido normal na Produção, identificado pela mesa em vez do nome:
+
+```
+#045   MESA 01   ANA
+1 MATCHA LATTE — Regular / Integral / Quente
+1 COOKIE
+```
+
+O barista não precisa entender comandas; ele recebe só o que precisa preparar e sabe onde entregar.
+
+Encerrar uma comanda com saldo em aberto exige confirmação explícita. Quando o saldo chega a zero, a comanda mostra **pagamento concluído** e a mesa é liberada.
+
+Toda a lógica de cálculo (subtotal, desconto, pago, restante) vive em `src/tabMath.ts`, para que mapa, painel e resumo nunca divirjam.
 
 ## Responsividade
 
